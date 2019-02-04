@@ -1,0 +1,65 @@
+openapi: 3.0.0
+components:
+  schemas:
+    UUID:
+      type: string
+      pattern: '^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$'
+      example: dc98e40a-1c02-4ce6-a656-f28910c66aaa
+    MedicationRequestUUID:
+      type: string
+      pattern: >-
+        ^resource:org.healthchain.MedicationRequest#[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$
+      example: >-
+        resource:org.healthchain.MedicationRequest#dc98e40a-1c02-4ce6-a656-f28910c66aaa
+    PatientUUID:
+      type: string
+      pattern: >-
+        ^resource:org.healthchain.Patient#[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$
+      example: 'resource:org.healthchain.Patient#dc98e40a-1c02-4ce6-a656-f28910c66aaa'
+    PrescriberUUID:
+      type: string
+      pattern: >-
+        ^resource:org.healthchain.Prescriber#[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$
+      example: 'resource:org.healthchain.Prescriber#dc98e40a-1c02-4ce6-a656-f28910c66aaa'
+    DispenserUUID:
+      type: string
+      pattern: >-
+        ^resource:org.healthchain.Dispenser#[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$
+      example: 'resource:org.healthchain.Dispenser#dc98e40a-1c02-4ce6-a656-f28910c66aaa'
+    ClinicUUID:
+      type: string
+      pattern: >-
+        ^resource:org.healthchain.Clinic#[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$
+      example: 'resource:org.healthchain.Clinic#dc98e40a-1c02-4ce6-a656-f28910c66aaa'
+    ClinicLocationUUID:
+      type: string
+      pattern: >-
+        ^resource:org.healthchain.ClinicLocation#[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$
+      example: >-
+        resource:org.healthchain.ClinicLocation#dc98e40a-1c02-4ce6-a656-f28910c66aaa
+    PharmacyLocationUUID:
+      type: string
+      pattern: >-
+        ^resource:org.healthchain.PharmacyLocation#[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$
+      example: >-
+        resource:org.healthchain.PharmacyLocation#dc98e40a-1c02-4ce6-a656-f28910c66aaa
+    PractitionerUUID:
+      type: string
+      pattern: >-
+        ^resource:org.healthchain.(Prescriber|Dispenser|PharmacyLocation)#[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$
+      example: 'resource:org.healthchain.Prescriber#dc98e40a-1c02-4ce6-a656-f28910c66aaa'
+    PatientOrPractitionerUUID:
+      type: string
+      pattern: >-
+        ^resource:org.healthchain.(Patient|Prescriber|Dispenser|PharmacyLocation)#[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$
+      example: 'resource:org.healthchain.Patient#dc98e40a-1c02-4ce6-a656-f28910c66aaa'
+    ResourceUUID:
+      type: string
+      pattern: >-
+        ^resource:org.healthchain.[a-zA-Z]+#[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$
+      example: 'resource:org.healthchain.Clinic#dc98e40a-1c02-4ce6-a656-f28910c66aaa'
+    Token:
+      type: string
+      pattern: >-
+        ^[a-zA-Z0-9\-_]+?\.[a-zA-Z0-9\-_]+?\.([a-zA-Z0-9\-_]+)?$
+      example: ''

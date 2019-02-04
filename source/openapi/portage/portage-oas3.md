@@ -36,10 +36,6 @@ Base URLs:
 
 * <a href="//localhost:3000/">//localhost:3000/</a>
 
-* <a href="//https://dev.healthchain.ca/portage/v1/">//https://dev.healthchain.ca/portage/v1/</a>
-
-# Authentication
-
 <h1 id="healthchain-portage-api-quick-reference">Quick Reference</h1>
 
 ## get__clinics_{assigner}_{value}
@@ -196,9 +192,8 @@ Get a Clinic by Identifier assigner and value
 
 <h3 id="get__clinics_{assigner}_{value}-responseschema">Response Schema</h3>
 
-<aside class="warning">
-To perform this operation, you must be authenticated by means of one of the following methods:
-BearerAuth
+<aside class="success">
+This operation does not require authentication
 </aside>
 
 ## get__clinicLocations_{assigner}_{value}
@@ -364,9 +359,8 @@ Get a ClinicLocation by Identifier properties assigner and value.
 
 <h3 id="get__cliniclocations_{assigner}_{value}-responseschema">Response Schema</h3>
 
-<aside class="warning">
-To perform this operation, you must be authenticated by means of one of the following methods:
-BearerAuth
+<aside class="success">
+This operation does not require authentication
 </aside>
 
 ## get__patients_{assigner}_{value}
@@ -533,9 +527,8 @@ Get a Patient by assigner and value.  See Patient list for test ca-on-patient-hc
 
 <h3 id="get__patients_{assigner}_{value}-responseschema">Response Schema</h3>
 
-<aside class="warning">
-To perform this operation, you must be authenticated by means of one of the following methods:
-BearerAuth
+<aside class="success">
+This operation does not require authentication
 </aside>
 
 ## get__pharmacyLocations_{assigner}_{value}
@@ -692,9 +685,8 @@ Get a PharmacyLocation by Identifier properties assigner and value.
 
 <h3 id="get__pharmacylocations_{assigner}_{value}-responseschema">Response Schema</h3>
 
-<aside class="warning">
-To perform this operation, you must be authenticated by means of one of the following methods:
-BearerAuth
+<aside class="success">
+This operation does not require authentication
 </aside>
 
 ## get__medicationRequests
@@ -873,9 +865,8 @@ Get MedicationRequests by patientId and/or status
 
 <h3 id="get__medicationrequests-responseschema">Response Schema</h3>
 
-<aside class="warning">
-To perform this operation, you must be authenticated by means of one of the following methods:
-BearerAuth
+<aside class="success">
+This operation does not require authentication
 </aside>
 
 ## post__medicationRequests
@@ -1029,9 +1020,8 @@ false
 |409|[Conflict](https://tools.ietf.org/html/rfc7231#section-6.5.8)|Conflict|None|
 |500|[Internal Server Error](https://tools.ietf.org/html/rfc7231#section-6.6.1)|Unexpected error|None|
 
-<aside class="warning">
-To perform this operation, you must be authenticated by means of one of the following methods:
-BearerAuth
+<aside class="success">
+This operation does not require authentication
 </aside>
 
 ## get__medicationDispenses
@@ -1217,9 +1207,8 @@ Returns all MedicationDispense to the caller, filtered according to ACL rules.
 
 <h3 id="get__medicationdispenses-responseschema">Response Schema</h3>
 
-<aside class="warning">
-To perform this operation, you must be authenticated by means of one of the following methods:
-BearerAuth
+<aside class="success">
+This operation does not require authentication
 </aside>
 
 ## post__medicationDispenses
@@ -1373,9 +1362,8 @@ false
 |409|[Conflict](https://tools.ietf.org/html/rfc7231#section-6.5.8)|Conflict|None|
 |500|[Internal Server Error](https://tools.ietf.org/html/rfc7231#section-6.6.1)|Unexpected error|None|
 
-<aside class="warning">
-To perform this operation, you must be authenticated by means of one of the following methods:
-BearerAuth
+<aside class="success">
+This operation does not require authentication
 </aside>
 
 ## get__clinicLocationApplications_{assigner}_{value}
@@ -1543,9 +1531,8 @@ Get a ClinicLocationApplication by Identifier properties assigner and value.
 
 <h3 id="get__cliniclocationapplications_{assigner}_{value}-responseschema">Response Schema</h3>
 
-<aside class="warning">
-To perform this operation, you must be authenticated by means of one of the following methods:
-BearerAuth
+<aside class="success">
+This operation does not require authentication
 </aside>
 
 ## get__pharmacyLocationApplications_{assigner}_{value}
@@ -1713,9 +1700,8 @@ Get a PharmacyLocationApplication by Identifier properties assigner and value.
 
 <h3 id="get__pharmacylocationapplications_{assigner}_{value}-responseschema">Response Schema</h3>
 
-<aside class="warning">
-To perform this operation, you must be authenticated by means of one of the following methods:
-BearerAuth
+<aside class="success">
+This operation does not require authentication
 </aside>
 
 <h1 id="healthchain-portage-api-portage-api-papi-">Portage API (PAPI)</h1>
@@ -1871,9 +1857,8 @@ false
 |409|[Conflict](https://tools.ietf.org/html/rfc7231#section-6.5.8)|Conflict|None|
 |500|[Internal Server Error](https://tools.ietf.org/html/rfc7231#section-6.6.1)|Unexpected error|None|
 
-<aside class="warning">
-To perform this operation, you must be authenticated by means of one of the following methods:
-BearerAuth
+<aside class="success">
+This operation does not require authentication
 </aside>
 
 ## post__clinicLocations
@@ -2027,9 +2012,8 @@ false
 |409|[Conflict](https://tools.ietf.org/html/rfc7231#section-6.5.8)|Conflict|None|
 |500|[Internal Server Error](https://tools.ietf.org/html/rfc7231#section-6.6.1)|Unexpected error|None|
 
-<aside class="warning">
-To perform this operation, you must be authenticated by means of one of the following methods:
-BearerAuth
+<aside class="success">
+This operation does not require authentication
 </aside>
 
 ## post__dispensers
@@ -2183,9 +2167,8 @@ false
 |409|[Conflict](https://tools.ietf.org/html/rfc7231#section-6.5.8)|Conflict|None|
 |500|[Internal Server Error](https://tools.ietf.org/html/rfc7231#section-6.6.1)|Unexpected error|None|
 
-<aside class="warning">
-To perform this operation, you must be authenticated by means of one of the following methods:
-BearerAuth
+<aside class="success">
+This operation does not require authentication
 </aside>
 
 ## put__dispensers_{dispenserId}_pharmacyLocations_{pharmacyLocationId}
@@ -2346,9 +2329,8 @@ false
 |409|[Conflict](https://tools.ietf.org/html/rfc7231#section-6.5.8)|Server error|None|
 |default|Default|Unexpected error|None|
 
-<aside class="warning">
-To perform this operation, you must be authenticated by means of one of the following methods:
-BearerAuth
+<aside class="success">
+This operation does not require authentication
 </aside>
 
 ## post__prescribers
@@ -2502,9 +2484,8 @@ false
 |409|[Conflict](https://tools.ietf.org/html/rfc7231#section-6.5.8)|Conflict|None|
 |500|[Internal Server Error](https://tools.ietf.org/html/rfc7231#section-6.6.1)|Unexpected error|None|
 
-<aside class="warning">
-To perform this operation, you must be authenticated by means of one of the following methods:
-BearerAuth
+<aside class="success">
+This operation does not require authentication
 </aside>
 
 ## put__prescribers_{prescriberId}_clinicLocations_{clinicLocationId}
@@ -2665,9 +2646,8 @@ false
 |409|[Conflict](https://tools.ietf.org/html/rfc7231#section-6.5.8)|Server error|None|
 |default|Default|Unexpected error|None|
 
-<aside class="warning">
-To perform this operation, you must be authenticated by means of one of the following methods:
-BearerAuth
+<aside class="success">
+This operation does not require authentication
 </aside>
 
 ## post__clinicAdmins
@@ -2821,9 +2801,8 @@ false
 |409|[Conflict](https://tools.ietf.org/html/rfc7231#section-6.5.8)|Conflict|None|
 |500|[Internal Server Error](https://tools.ietf.org/html/rfc7231#section-6.6.1)|Unexpected error|None|
 
-<aside class="warning">
-To perform this operation, you must be authenticated by means of one of the following methods:
-BearerAuth
+<aside class="success">
+This operation does not require authentication
 </aside>
 
 ## put__clinicAdmins_{clinicAdminId}_clinicLocations_{clinicLocationId}
@@ -2984,9 +2963,8 @@ false
 |409|[Conflict](https://tools.ietf.org/html/rfc7231#section-6.5.8)|Server error|None|
 |default|Default|Unexpected error|None|
 
-<aside class="warning">
-To perform this operation, you must be authenticated by means of one of the following methods:
-BearerAuth
+<aside class="success">
+This operation does not require authentication
 </aside>
 
 ## post__patients
@@ -3140,9 +3118,8 @@ false
 |409|[Conflict](https://tools.ietf.org/html/rfc7231#section-6.5.8)|Conflict|None|
 |500|[Internal Server Error](https://tools.ietf.org/html/rfc7231#section-6.6.1)|Unexpected error|None|
 
-<aside class="warning">
-To perform this operation, you must be authenticated by means of one of the following methods:
-BearerAuth
+<aside class="success">
+This operation does not require authentication
 </aside>
 
 ## post__bulkPatients
@@ -3296,9 +3273,8 @@ false
 |409|[Conflict](https://tools.ietf.org/html/rfc7231#section-6.5.8)|Conflict|None|
 |500|[Internal Server Error](https://tools.ietf.org/html/rfc7231#section-6.6.1)|Unexpected error|None|
 
-<aside class="warning">
-To perform this operation, you must be authenticated by means of one of the following methods:
-BearerAuth
+<aside class="success">
+This operation does not require authentication
 </aside>
 
 ## put__patients_{patientId}_clinicLocations_{clinicLocationId}
@@ -3459,9 +3435,8 @@ false
 |409|[Conflict](https://tools.ietf.org/html/rfc7231#section-6.5.8)|Server error|None|
 |default|Default|Unexpected error|None|
 
-<aside class="warning">
-To perform this operation, you must be authenticated by means of one of the following methods:
-BearerAuth
+<aside class="success">
+This operation does not require authentication
 </aside>
 
 ## put__patients_{patientId}_pharmacyLocations_{pharmacyLocationId}
@@ -3622,9 +3597,8 @@ false
 |409|[Conflict](https://tools.ietf.org/html/rfc7231#section-6.5.8)|Server error|None|
 |default|Default|Unexpected error|None|
 
-<aside class="warning">
-To perform this operation, you must be authenticated by means of one of the following methods:
-BearerAuth
+<aside class="success">
+This operation does not require authentication
 </aside>
 
 ## post__pharmacyLocations
@@ -3778,9 +3752,8 @@ false
 |409|[Conflict](https://tools.ietf.org/html/rfc7231#section-6.5.8)|Conflict|None|
 |500|[Internal Server Error](https://tools.ietf.org/html/rfc7231#section-6.6.1)|Unexpected error|None|
 
-<aside class="warning">
-To perform this operation, you must be authenticated by means of one of the following methods:
-BearerAuth
+<aside class="success">
+This operation does not require authentication
 </aside>
 
 ## delete__medicationRequests_{id}
@@ -3908,9 +3881,8 @@ Cancel a medication request.
 |409|[Conflict](https://tools.ietf.org/html/rfc7231#section-6.5.8)|Server error|None|
 |default|Default|Unexpected error|None|
 
-<aside class="warning">
-To perform this operation, you must be authenticated by means of one of the following methods:
-BearerAuth
+<aside class="success">
+This operation does not require authentication
 </aside>
 
 ## put__medicationRequests_{id}_cancel
@@ -4036,9 +4008,8 @@ func main() {
 |409|[Conflict](https://tools.ietf.org/html/rfc7231#section-6.5.8)|Server error|None|
 |default|Default|Unexpected error|None|
 
-<aside class="warning">
-To perform this operation, you must be authenticated by means of one of the following methods:
-BearerAuth
+<aside class="success">
+This operation does not require authentication
 </aside>
 
 ## put__medicationRequests_{id}_approve
@@ -4164,9 +4135,8 @@ func main() {
 |409|[Conflict](https://tools.ietf.org/html/rfc7231#section-6.5.8)|Server error|None|
 |default|Default|Unexpected error|None|
 
-<aside class="warning">
-To perform this operation, you must be authenticated by means of one of the following methods:
-BearerAuth
+<aside class="success">
+This operation does not require authentication
 </aside>
 
 ## put__medicationRequests_{id}_acknowledge
@@ -4322,9 +4292,8 @@ func main() {
 
 <h3 id="put__medicationrequests_{id}_acknowledge-responseschema">Response Schema</h3>
 
-<aside class="warning">
-To perform this operation, you must be authenticated by means of one of the following methods:
-BearerAuth
+<aside class="success">
+This operation does not require authentication
 </aside>
 
 ## put__medicationRequests_{id}_acknowledge_{type}
@@ -4488,9 +4457,8 @@ func main() {
 
 <h3 id="put__medicationrequests_{id}_acknowledge_{type}-responseschema">Response Schema</h3>
 
-<aside class="warning">
-To perform this operation, you must be authenticated by means of one of the following methods:
-BearerAuth
+<aside class="success">
+This operation does not require authentication
 </aside>
 
 ## put__medicationRequests_{id}_note
@@ -4499,21 +4467,29 @@ BearerAuth
 
 ```shell
 # You can also use wget
-curl -X PUT /localhost:3000/medicationRequests/{id}/note
+curl -X PUT /localhost:3000/medicationRequests/{id}/note \
+  -H 'Content-Type: application/json'
 
 ```
 
 ```http
 PUT /localhost:3000/medicationRequests/{id}/note HTTP/1.1
 
+Content-Type: application/json
+
 ```
 
 ```javascript
+var headers = {
+  'Content-Type':'application/json'
+
+};
 
 $.ajax({
   url: '/localhost:3000/medicationRequests/{id}/note',
   method: 'put',
 
+  headers: headers,
   success: function(data) {
     console.log(JSON.stringify(data));
   }
@@ -4523,11 +4499,17 @@ $.ajax({
 
 ```javascript--nodejs
 const fetch = require('node-fetch');
+const inputBody = 'false';
+const headers = {
+  'Content-Type':'application/json'
+
+};
 
 fetch('/localhost:3000/medicationRequests/{id}/note',
 {
-  method: 'PUT'
-
+  method: 'PUT',
+  body: inputBody,
+  headers: headers
 })
 .then(function(res) {
     return res.json();
@@ -4541,9 +4523,13 @@ fetch('/localhost:3000/medicationRequests/{id}/note',
 require 'rest-client'
 require 'json'
 
+headers = {
+  'Content-Type' => 'application/json'
+}
+
 result = RestClient.put '/localhost:3000/medicationRequests/{id}/note',
   params: {
-  }
+  }, headers: headers
 
 p JSON.parse(result)
 
@@ -4551,10 +4537,13 @@ p JSON.parse(result)
 
 ```python
 import requests
+headers = {
+  'Content-Type': 'application/json'
+}
 
 r = requests.put('/localhost:3000/medicationRequests/{id}/note', params={
 
-)
+}, headers = headers)
 
 print r.json()
 
@@ -4587,6 +4576,11 @@ import (
 
 func main() {
 
+    headers := map[string][]string{
+        "Content-Type": []string{"application/json"},
+        
+    }
+
     data := bytes.NewBuffer([]byte{jsonReq})
     req, err := http.NewRequest("PUT", "/localhost:3000/medicationRequests/{id}/note", data)
     req.Header = headers
@@ -4602,6 +4596,17 @@ func main() {
 
 *Adds a note to a MedicationRequest*
 
+> Body parameter
+
+```json
+false
+```
+
+```yaml
+false
+
+```
+
 <h3 id="put__medicationrequests_{id}_note-parameters">Parameters</h3>
 
 |Name|In|Type|Required|Description|
@@ -4616,9 +4621,8 @@ func main() {
 |409|[Conflict](https://tools.ietf.org/html/rfc7231#section-6.5.8)|Server error|None|
 |default|Default|Unexpected error|None|
 
-<aside class="warning">
-To perform this operation, you must be authenticated by means of one of the following methods:
-BearerAuth
+<aside class="success">
+This operation does not require authentication
 </aside>
 
 ## put__medicationRequests_{id}_pharmacyLocation_{pharmacyLocationId}
@@ -4745,9 +4749,8 @@ func main() {
 |409|[Conflict](https://tools.ietf.org/html/rfc7231#section-6.5.8)|Server error|None|
 |default|Default|Unexpected error|None|
 
-<aside class="warning">
-To perform this operation, you must be authenticated by means of one of the following methods:
-BearerAuth
+<aside class="success">
+This operation does not require authentication
 </aside>
 
 ## put__medicationDispenses_{id}
@@ -4907,9 +4910,8 @@ false
 |409|[Conflict](https://tools.ietf.org/html/rfc7231#section-6.5.8)|Server error|None|
 |default|Default|Unexpected error|None|
 
-<aside class="warning">
-To perform this operation, you must be authenticated by means of one of the following methods:
-BearerAuth
+<aside class="success">
+This operation does not require authentication
 </aside>
 
 ## put__medicationDispenses_{id}_note
@@ -4918,21 +4920,29 @@ BearerAuth
 
 ```shell
 # You can also use wget
-curl -X PUT /localhost:3000/medicationDispenses/{id}/note
+curl -X PUT /localhost:3000/medicationDispenses/{id}/note \
+  -H 'Content-Type: application/json'
 
 ```
 
 ```http
 PUT /localhost:3000/medicationDispenses/{id}/note HTTP/1.1
 
+Content-Type: application/json
+
 ```
 
 ```javascript
+var headers = {
+  'Content-Type':'application/json'
+
+};
 
 $.ajax({
   url: '/localhost:3000/medicationDispenses/{id}/note',
   method: 'put',
 
+  headers: headers,
   success: function(data) {
     console.log(JSON.stringify(data));
   }
@@ -4942,11 +4952,17 @@ $.ajax({
 
 ```javascript--nodejs
 const fetch = require('node-fetch');
+const inputBody = 'false';
+const headers = {
+  'Content-Type':'application/json'
+
+};
 
 fetch('/localhost:3000/medicationDispenses/{id}/note',
 {
-  method: 'PUT'
-
+  method: 'PUT',
+  body: inputBody,
+  headers: headers
 })
 .then(function(res) {
     return res.json();
@@ -4960,9 +4976,13 @@ fetch('/localhost:3000/medicationDispenses/{id}/note',
 require 'rest-client'
 require 'json'
 
+headers = {
+  'Content-Type' => 'application/json'
+}
+
 result = RestClient.put '/localhost:3000/medicationDispenses/{id}/note',
   params: {
-  }
+  }, headers: headers
 
 p JSON.parse(result)
 
@@ -4970,10 +4990,13 @@ p JSON.parse(result)
 
 ```python
 import requests
+headers = {
+  'Content-Type': 'application/json'
+}
 
 r = requests.put('/localhost:3000/medicationDispenses/{id}/note', params={
 
-)
+}, headers = headers)
 
 print r.json()
 
@@ -5006,6 +5029,11 @@ import (
 
 func main() {
 
+    headers := map[string][]string{
+        "Content-Type": []string{"application/json"},
+        
+    }
+
     data := bytes.NewBuffer([]byte{jsonReq})
     req, err := http.NewRequest("PUT", "/localhost:3000/medicationDispenses/{id}/note", data)
     req.Header = headers
@@ -5021,6 +5049,17 @@ func main() {
 
 *Adds a note to a MedicationDispense*
 
+> Body parameter
+
+```json
+false
+```
+
+```yaml
+false
+
+```
+
 <h3 id="put__medicationdispenses_{id}_note-parameters">Parameters</h3>
 
 |Name|In|Type|Required|Description|
@@ -5035,9 +5074,8 @@ func main() {
 |409|[Conflict](https://tools.ietf.org/html/rfc7231#section-6.5.8)|Server error|None|
 |default|Default|Unexpected error|None|
 
-<aside class="warning">
-To perform this operation, you must be authenticated by means of one of the following methods:
-BearerAuth
+<aside class="success">
+This operation does not require authentication
 </aside>
 
 ## post__sigs
@@ -5191,9 +5229,8 @@ false
 |409|[Conflict](https://tools.ietf.org/html/rfc7231#section-6.5.8)|Conflict|None|
 |500|[Internal Server Error](https://tools.ietf.org/html/rfc7231#section-6.6.1)|Unexpected error|None|
 
-<aside class="warning">
-To perform this operation, you must be authenticated by means of one of the following methods:
-BearerAuth
+<aside class="success">
+This operation does not require authentication
 </aside>
 
 <h1 id="healthchain-portage-api-portage-queries">Portage Queries</h1>
@@ -5367,9 +5404,8 @@ Get clinics
 
 <h3 id="get__clinics-responseschema">Response Schema</h3>
 
-<aside class="warning">
-To perform this operation, you must be authenticated by means of one of the following methods:
-BearerAuth
+<aside class="success">
+This operation does not require authentication
 </aside>
 
 ## get__clinics_{id}
@@ -5525,9 +5561,8 @@ Get a Clinic based on it's unique HealthChain identifier
 
 <h3 id="get__clinics_{id}-responseschema">Response Schema</h3>
 
-<aside class="warning">
-To perform this operation, you must be authenticated by means of one of the following methods:
-BearerAuth
+<aside class="success">
+This operation does not require authentication
 </aside>
 
 ## get__clinicLocations
@@ -5711,9 +5746,8 @@ Returns clinicLocations to the caller
 
 <h3 id="get__cliniclocations-responseschema">Response Schema</h3>
 
-<aside class="warning">
-To perform this operation, you must be authenticated by means of one of the following methods:
-BearerAuth
+<aside class="success">
+This operation does not require authentication
 </aside>
 
 ## get__clinicLocations_{id}
@@ -5876,9 +5910,8 @@ Get a ClinicLocation by unique HealthChain id.
 
 <h3 id="get__cliniclocations_{id}-responseschema">Response Schema</h3>
 
-<aside class="warning">
-To perform this operation, you must be authenticated by means of one of the following methods:
-BearerAuth
+<aside class="success">
+This operation does not require authentication
 </aside>
 
 ## get__dispensers
@@ -6062,9 +6095,8 @@ Returns dispensers based on the following criteria
 
 <h3 id="get__dispensers-responseschema">Response Schema</h3>
 
-<aside class="warning">
-To perform this operation, you must be authenticated by means of one of the following methods:
-BearerAuth
+<aside class="success">
+This operation does not require authentication
 </aside>
 
 ## get__dispensers_{id}
@@ -6237,9 +6269,8 @@ Get a Dispenser by id.
 
 <h3 id="get__dispensers_{id}-responseschema">Response Schema</h3>
 
-<aside class="warning">
-To perform this operation, you must be authenticated by means of one of the following methods:
-BearerAuth
+<aside class="success">
+This operation does not require authentication
 </aside>
 
 ## get__dispensers_{assigner}_{value}
@@ -6413,9 +6444,8 @@ Get a Dispenser by assigner and value.
 
 <h3 id="get__dispensers_{assigner}_{value}-responseschema">Response Schema</h3>
 
-<aside class="warning">
-To perform this operation, you must be authenticated by means of one of the following methods:
-BearerAuth
+<aside class="success">
+This operation does not require authentication
 </aside>
 
 ## get__prescribers
@@ -6600,9 +6630,8 @@ Returns prescribers based on the following criteria
 
 <h3 id="get__prescribers-responseschema">Response Schema</h3>
 
-<aside class="warning">
-To perform this operation, you must be authenticated by means of one of the following methods:
-BearerAuth
+<aside class="success">
+This operation does not require authentication
 </aside>
 
 ## get__prescribers_{id}
@@ -6766,9 +6795,8 @@ Get a Prescriber by id.
 
 <h3 id="get__prescribers_{id}-responseschema">Response Schema</h3>
 
-<aside class="warning">
-To perform this operation, you must be authenticated by means of one of the following methods:
-BearerAuth
+<aside class="success">
+This operation does not require authentication
 </aside>
 
 ## get__prescribers_{assigner}_{value}
@@ -6933,9 +6961,8 @@ Get a Prescriber by assigner and value.
 
 <h3 id="get__prescribers_{assigner}_{value}-responseschema">Response Schema</h3>
 
-<aside class="warning">
-To perform this operation, you must be authenticated by means of one of the following methods:
-BearerAuth
+<aside class="success">
+This operation does not require authentication
 </aside>
 
 ## get__clinicAdmins
@@ -7120,9 +7147,8 @@ Returns ClinicAdmin based on the following criteria
 
 <h3 id="get__clinicadmins-responseschema">Response Schema</h3>
 
-<aside class="warning">
-To perform this operation, you must be authenticated by means of one of the following methods:
-BearerAuth
+<aside class="success">
+This operation does not require authentication
 </aside>
 
 ## get__clinicAdmins_{id}
@@ -7286,9 +7312,8 @@ Get a ClinicAdmin by id.
 
 <h3 id="get__clinicadmins_{id}-responseschema">Response Schema</h3>
 
-<aside class="warning">
-To perform this operation, you must be authenticated by means of one of the following methods:
-BearerAuth
+<aside class="success">
+This operation does not require authentication
 </aside>
 
 ## get__clinicAdmins_{assigner}_{value}
@@ -7453,9 +7478,8 @@ Get a Prescriber by assigner and value.
 
 <h3 id="get__clinicadmins_{assigner}_{value}-responseschema">Response Schema</h3>
 
-<aside class="warning">
-To perform this operation, you must be authenticated by means of one of the following methods:
-BearerAuth
+<aside class="success">
+This operation does not require authentication
 </aside>
 
 ## get__patients
@@ -7624,9 +7648,8 @@ Find patients
 
 <h3 id="get__patients-responseschema">Response Schema</h3>
 
-<aside class="warning">
-To perform this operation, you must be authenticated by means of one of the following methods:
-BearerAuth
+<aside class="success">
+This operation does not require authentication
 </aside>
 
 ## get__patients_{id}
@@ -7792,9 +7815,8 @@ Get a Patient by assigner and value.
 
 <h3 id="get__patients_{id}-responseschema">Response Schema</h3>
 
-<aside class="warning">
-To perform this operation, you must be authenticated by means of one of the following methods:
-BearerAuth
+<aside class="success">
+This operation does not require authentication
 </aside>
 
 ## get__patients_{id}_mme
@@ -7920,9 +7942,8 @@ Get MME for a Patient's current active medications.
 |---|---|---|---|
 |200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Success|None|
 
-<aside class="warning">
-To perform this operation, you must be authenticated by means of one of the following methods:
-BearerAuth
+<aside class="success">
+This operation does not require authentication
 </aside>
 
 ## get__pharmacyLocations
@@ -8104,9 +8125,8 @@ Returns pharmacyLocations to the caller
 
 <h3 id="get__pharmacylocations-responseschema">Response Schema</h3>
 
-<aside class="warning">
-To perform this operation, you must be authenticated by means of one of the following methods:
-BearerAuth
+<aside class="success">
+This operation does not require authentication
 </aside>
 
 ## get__pharmacyLocations_{id}
@@ -8262,9 +8282,8 @@ Get a PharmacyLocation by unique HealthChain id.
 
 <h3 id="get__pharmacylocations_{id}-responseschema">Response Schema</h3>
 
-<aside class="warning">
-To perform this operation, you must be authenticated by means of one of the following methods:
-BearerAuth
+<aside class="success">
+This operation does not require authentication
 </aside>
 
 ## get__medicationRequests_{id}
@@ -8436,9 +8455,8 @@ Return a MedicationRequest record with specified id.
 
 <h3 id="get__medicationrequests_{id}-responseschema">Response Schema</h3>
 
-<aside class="warning">
-To perform this operation, you must be authenticated by means of one of the following methods:
-BearerAuth
+<aside class="success">
+This operation does not require authentication
 </aside>
 
 ## get__medicationRequests_{id}_mme
@@ -8566,9 +8584,8 @@ Return the MME value for the MedicationRequest record with specified id.
 |409|[Conflict](https://tools.ietf.org/html/rfc7231#section-6.5.8)|Server error|None|
 |default|Default|Unexpected error|None|
 
-<aside class="warning">
-To perform this operation, you must be authenticated by means of one of the following methods:
-BearerAuth
+<aside class="success">
+This operation does not require authentication
 </aside>
 
 ## get__medicationRequests_{id}_note
@@ -8726,9 +8743,8 @@ Return a MedicationRequest record's notes with specified id.
 
 <h3 id="get__medicationrequests_{id}_note-responseschema">Response Schema</h3>
 
-<aside class="warning">
-To perform this operation, you must be authenticated by means of one of the following methods:
-BearerAuth
+<aside class="success">
+This operation does not require authentication
 </aside>
 
 ## get__medicationDispenses_{id}
@@ -8867,9 +8883,8 @@ Return a list of MedicationRequest records based on the following criteria.
 |409|[Conflict](https://tools.ietf.org/html/rfc7231#section-6.5.8)|Server error|None|
 |default|Default|Unexpected error|None|
 
-<aside class="warning">
-To perform this operation, you must be authenticated by means of one of the following methods:
-BearerAuth
+<aside class="success">
+This operation does not require authentication
 </aside>
 
 ## get__medicationDispenses_{id}_note
@@ -9027,9 +9042,8 @@ Return a MedicationDispense record's notes with specified id.
 
 <h3 id="get__medicationdispenses_{id}_note-responseschema">Response Schema</h3>
 
-<aside class="warning">
-To perform this operation, you must be authenticated by means of one of the following methods:
-BearerAuth
+<aside class="success">
+This operation does not require authentication
 </aside>
 
 ## get__medications_{din}
@@ -9157,9 +9171,8 @@ Return the Medication information for a drug.
 |409|[Conflict](https://tools.ietf.org/html/rfc7231#section-6.5.8)|Server error|None|
 |default|Default|Unexpected error|None|
 
-<aside class="warning">
-To perform this operation, you must be authenticated by means of one of the following methods:
-BearerAuth
+<aside class="success">
+This operation does not require authentication
 </aside>
 
 ## get__medications_{din}_mme
@@ -9287,9 +9300,8 @@ Return the MME value for a unit of chosen drug.
 |409|[Conflict](https://tools.ietf.org/html/rfc7231#section-6.5.8)|Server error|None|
 |default|Default|Unexpected error|None|
 
-<aside class="warning">
-To perform this operation, you must be authenticated by means of one of the following methods:
-BearerAuth
+<aside class="success">
+This operation does not require authentication
 </aside>
 
 ## get__medications
@@ -9419,9 +9431,8 @@ Return Medication information for chosen drugs.
 |409|[Conflict](https://tools.ietf.org/html/rfc7231#section-6.5.8)|Server error|None|
 |default|Default|Unexpected error|None|
 
-<aside class="warning">
-To perform this operation, you must be authenticated by means of one of the following methods:
-BearerAuth
+<aside class="success">
+This operation does not require authentication
 </aside>
 
 ## get__clinicLocationApplications
@@ -9600,9 +9611,8 @@ Returns ClinicLocationApplication to the caller
 
 <h3 id="get__cliniclocationapplications-responseschema">Response Schema</h3>
 
-<aside class="warning">
-To perform this operation, you must be authenticated by means of one of the following methods:
-BearerAuth
+<aside class="success">
+This operation does not require authentication
 </aside>
 
 ## get__clinicLocationApplications_{id}
@@ -9767,9 +9777,8 @@ Get a ClinicLocationApplication by unique HealthChain id.
 
 <h3 id="get__cliniclocationapplications_{id}-responseschema">Response Schema</h3>
 
-<aside class="warning">
-To perform this operation, you must be authenticated by means of one of the following methods:
-BearerAuth
+<aside class="success">
+This operation does not require authentication
 </aside>
 
 ## get__pharmacyLocationApplications
@@ -9948,9 +9957,8 @@ Returns PharmacyLocationApplication to the caller
 
 <h3 id="get__pharmacylocationapplications-responseschema">Response Schema</h3>
 
-<aside class="warning">
-To perform this operation, you must be authenticated by means of one of the following methods:
-BearerAuth
+<aside class="success">
+This operation does not require authentication
 </aside>
 
 ## get__pharmacyLocationApplications_{id}
@@ -10115,9 +10123,8 @@ Get a PharmacyLocationApplication by unique HealthChain id.
 
 <h3 id="get__pharmacylocationapplications_{id}-responseschema">Response Schema</h3>
 
-<aside class="warning">
-To perform this operation, you must be authenticated by means of one of the following methods:
-BearerAuth
+<aside class="success">
+This operation does not require authentication
 </aside>
 
 ## get__sigs
@@ -10267,9 +10274,8 @@ Get Sigs
 
 <h3 id="get__sigs-responseschema">Response Schema</h3>
 
-<aside class="warning">
-To perform this operation, you must be authenticated by means of one of the following methods:
-BearerAuth
+<aside class="success">
+This operation does not require authentication
 </aside>
 
 <h1 id="healthchain-portage-api-prescriber-preferences">Prescriber Preferences</h1>
@@ -10422,7 +10428,7 @@ A prescriber can only ever run this for themselves.
 
 |Name|In|Type|Required|Description|
 |---|---|---|---|---|
-|body|body|[x-any](#schemax-any)|false|none|
+|body|body|[x-any](#schemax-any)|false|Sig|
 |sigId|path|string|true|none|
 
 <h3 id="put__prescribers_favoritesigs_{sigid}-responses">Responses</h3>
@@ -10433,9 +10439,8 @@ A prescriber can only ever run this for themselves.
 |409|[Conflict](https://tools.ietf.org/html/rfc7231#section-6.5.8)|Server error|None|
 |default|Default|Unexpected error|None|
 
-<aside class="warning">
-To perform this operation, you must be authenticated by means of one of the following methods:
-BearerAuth
+<aside class="success">
+This operation does not require authentication
 </aside>
 
 ## delete__prescribers_favoriteSigs_{sigId}
@@ -10563,9 +10568,8 @@ Remove a prescriber's favorite sig
 |409|[Conflict](https://tools.ietf.org/html/rfc7231#section-6.5.8)|Server error|None|
 |default|Default|Unexpected error|None|
 
-<aside class="warning">
-To perform this operation, you must be authenticated by means of one of the following methods:
-BearerAuth
+<aside class="success">
+This operation does not require authentication
 </aside>
 
 ## put__clinicAdmins_favoriteSigs_{sigId}
@@ -10716,7 +10720,7 @@ A prescriber can only ever run this for themselves.
 
 |Name|In|Type|Required|Description|
 |---|---|---|---|---|
-|body|body|[x-any](#schemax-any)|false|none|
+|body|body|[x-any](#schemax-any)|false|Sig|
 |sigId|path|string|true|none|
 
 <h3 id="put__clinicadmins_favoritesigs_{sigid}-responses">Responses</h3>
@@ -10727,9 +10731,8 @@ A prescriber can only ever run this for themselves.
 |409|[Conflict](https://tools.ietf.org/html/rfc7231#section-6.5.8)|Server error|None|
 |default|Default|Unexpected error|None|
 
-<aside class="warning">
-To perform this operation, you must be authenticated by means of one of the following methods:
-BearerAuth
+<aside class="success">
+This operation does not require authentication
 </aside>
 
 ## delete__clinicAdmins_favoriteSigs_{sigId}
@@ -10857,9 +10860,8 @@ Remove a prescriber's favorite sig
 |409|[Conflict](https://tools.ietf.org/html/rfc7231#section-6.5.8)|Server error|None|
 |default|Default|Unexpected error|None|
 
-<aside class="warning">
-To perform this operation, you must be authenticated by means of one of the following methods:
-BearerAuth
+<aside class="success">
+This operation does not require authentication
 </aside>
 
 # Schemas

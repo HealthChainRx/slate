@@ -1,0 +1,52 @@
+openapi: 3.0.0
+info:
+  version: "1.2.0"
+  title: HealthChain Admin API
+  description: >
+    # Introduction
+
+    A VendorAdmin can create the following type of applications
+
+    * ClinicLocationApplication
+    * PharmacyLocationApplocation
+    * PatientApplication
+
+security:
+  - BearerAuth: []
+
+paths:
+  '/token':
+    get:
+      summary: Get tokens of a user
+      description: Get clinics
+      parameters:
+        - name: name
+          in: query
+          description: The name of the clinic
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            'application/json':
+              schema:
+                $ref: 'schemas.yaml#/components/schemas/Tokens'
+  '/clinicLocationApplication':
+    post:
+      summary: Create a ClinicLocationApplication
+      description: >
+        VendorAdmins can create ClinicLocationApplication instances.  The result is a
+      requestBody:
+        $ref: 'requestBodies.yaml#/components/requestBodies/'
+      responses:
+        '200':
+          description: Success
+          content:
+            'application/json':
+              schema:
+                $ref: 'schemas.yaml#/components/schemas/ClinicLocationApplication'
+
+
+
+

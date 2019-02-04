@@ -1,0 +1,72 @@
+openapi: 3.0.0
+components:
+  examples:
+    clinic-example:
+      {
+        "resourceType": "org.healthchain.Clinic",
+        "name": "A Test Clinic"
+      }
+    clinicLocation-example:
+      {
+        "resourceType": "org.healthchain.ClinicLocation",
+        "name": "A Test Clinic Location",
+        "partOf": "resource:org.healthchain.Clinic#42766d55-d2cf-4de7-9a8c-7816a529f370"
+      }
+    prescriber-example:
+      {
+        "resourceType": "org.healthchain.Prescriber",
+        "name": {
+          "resourceType": "org.fhir.HumanName",
+          "use": "usual",
+          "family": "McDonald",
+          "given": [
+            "Ronald"
+          ],
+          "prefix": [
+            "Mr."
+          ],
+          "suffix": [
+            "MD"
+          ]
+        },
+        "telecom": [
+          {
+            "resourceType": "org.fhir.ContactPoint",
+            "system": "phone",
+            "value": "416-555-1212",
+            "use": "mobile",
+            "rank": 1
+          }
+        ],
+        "gender": "male",
+        "birthDate": "1995-05-05T00:01:00.000Z",
+        "identifier": [
+            {
+              "resourceType": "org.fhir.Identifier",
+              "assigner": "HealthChain",
+              "value": "12345"
+            }
+          ]
+      }
+    medicationRequest-example:
+      {
+        "resourceType": "org.healthchain.MedicationRequest",
+        "onBehalfOf": "resource:org.healthchain.ClinicLocation#150f3d4c-cc0b-4da5-b46c-22ce171ec660",
+        "patient": "resource:org.healthchain.Patient#cf47da65-f5fa-4e27-95ea-ac771cc49d21",
+        "medication": "external:Medication#00277193",
+        "dispenseRequest": {
+          "resourceType": "org.fhir.DispenseRequest",
+          "numberOfRepeatsAllowed": 0.0,
+          "quantity": {
+            "resourceType": "org.fhir.Quantity",
+            "value": 30.0,
+            "unit": "tablet"
+          }
+        },
+        "dosageInstruction": [
+          {
+            "resourceType": "org.fhir.Dosage",
+            "text": "t1t x5h x2w"
+          }
+        ]
+      }

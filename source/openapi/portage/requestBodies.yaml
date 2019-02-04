@@ -1,0 +1,13 @@
+openapi: 3.0.0
+components:
+  requestBodies:
+    Annotation:
+      content:
+        'application/json':
+          schema:
+            $ref: 'model-schema.yaml#/components/schemas/Annotation'
+        application/octet-stream:
+          schema:
+            $ref: 'model-schema.yaml#/components/schemas/Annotation'
+      description: The note to add
+      required: true

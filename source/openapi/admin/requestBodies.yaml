@@ -1,0 +1,14 @@
+openapi: 3.0.0
+components:
+  requestBodies:
+    ClinicLocationApplication:
+      description:
+        A ClinicLocationApplication represents the identity of an application at
+        a ClinicLocation which has been configured for secure communications to
+        the HealthChain Portage API
+      properties:
+      content:
+        'application/json':
+          schema:
+            $ref: 'schemas.yaml#/components/schemas/ClinicLocationApplication'
+
