@@ -1,0 +1,431 @@
+openapi: 3.0.0
+components:
+  schemas:
+    PostClinic:
+      discriminator:
+        propertyName: clinicType
+      description: A participant named Clinic
+      properties:
+        resourceType:
+          default: org.healthchain.Clinic
+          description: The class identifier for this type
+          type: string
+          example: org.healthchain.Clinic
+        identifier:
+          description: External identifiers for this clinic
+          type: array
+          items:
+            $ref: 'model-schema.yaml#/components/schemas/Identifier'
+        status:
+          description: The status of the clinic
+          type: string
+          default: active
+          example: active
+        name:
+          description: The name of the clinic
+          type: string
+          example: Example Clinic
+        telecom:
+          description: A contact detail for the organization
+          type: array
+          items:
+            $ref: 'model-schema.yaml#/components/schemas/ContactPoint'
+        partOf:
+          allOf:
+            - description: The parent organization
+            - $ref: 'uuid-schema.yaml#/components/schemas/ResourceUUID'
+        contact:
+          description: Contact for the organization for a certain purpose
+          type: array
+          items:
+            $ref: 'model-schema.yaml#/components/schemas/Contact'
+        endpoint:
+          description: >-
+            Technical endpoints providing access to services operated for the
+            organization
+          type: string
+        version:
+          description: The current version of this resource
+          type: integer
+          minimum: 1
+          example: 1
+      required:
+        - status
+        - name
+        - telecom
+        - identifier
+      example:
+        $ref: 'examples.yaml#/components/examples/clinic-example'
+    PostClinicLocation:
+      description: A participant named PharmacyLocation
+      allOf:
+        - $ref: 'model-schema.yaml#/components/schemas/Location'
+        - properties:
+            resourceType:
+              default: org.healthchain.ClinicLocation
+              description: The class identifier for this type
+              type: string
+              example: org.healthchain.ClinicLocation
+            identifier:
+              description: External identifiers for this clinic location
+              type: array
+              items:
+                $ref: 'model-schema.yaml#/components/schemas/Identifier'
+            partOf:
+              allOf:
+                - description: The clinic this location is a part of
+                - $ref: 'uuid-schema.yaml#/components/schemas/ClinicUUID'
+            status:
+              type: string
+              example: active
+              default: active
+            name:
+              type: string
+              example: The Clinic Zone
+      required:
+        - identifier
+        - name
+        - status
+        - partOf
+    PostDispenser:
+      description: An PostDispenser transaction
+      allOf:
+        - $ref: 'model-schema.yaml#/components/schemas/Person'
+        - properties:
+            resourceType:
+              default: org.healthchain.Dispenser
+              description: The resource type
+              type: string
+              example: org.healthchain.Dispenser
+            identifier:
+              description: External identifiers for this dispenser
+              type: array
+              items:
+                $ref: 'model-schema.yaml#/components/schemas/Identifier'
+            pharmacyLocations:
+              type: array
+              items:
+                $ref: 'model-schema.yaml#/components/schemas/PharmacyLocationRelationship'
+      required:
+        - identifier
+        - name
+    PostPrescriber:
+      description: An PostPrescriber tranaction
+      allOf:
+        - $ref: 'model-schema.yaml#/components/schemas/Person'
+        - properties:
+            resourceType:
+              default: org.healthchain.Prescriber
+              description: The resource type
+              type: string
+              example: org.healthchain.Prescriber
+            identifier:
+              description: External identifiers for this prescriber
+              type: array
+              items:
+                $ref: 'model-schema.yaml#/components/schemas/Identifier'
+            clinicLocations:
+              description: Clinic locations this prescriber has been assigned to
+              type: array
+              items:
+                $ref: 'model-schema.yaml#/components/schemas/ClinicLocationRelationship'
+      required:
+        - identifier
+        - name
+    PostClinicAdmin:
+      description: An PostClinicAdmin tranaction
+      allOf:
+        - $ref: 'model-schema.yaml#/components/schemas/Person'
+        - properties:
+            resourceType:
+              default: org.healthchain.ClinicAdmin
+              description: The resource type
+              type: string
+              example: org.healthchain.ClinicAdmin
+            identifier:
+              description: External identifiers for this clinicAdmin
+              type: array
+              items:
+                $ref: 'model-schema.yaml#/components/schemas/Identifier'
+            clinicLocations:
+              description: Clinics this ClinicAdmin has been assigned to
+              type: array
+              items:
+                $ref: 'model-schema.yaml#/components/schemas/ClinicLocationRelationship'
+      required:
+        - identifier
+        - name
+    PostPatient:
+      description: An PostPatient transaction
+      allOf:
+        - $ref: 'model-schema.yaml#/components/schemas/Person'
+        - properties:
+            resourceType:
+              default: org.healthchain.Patient
+              description: The resource type
+              type: string
+              example: org.healthchain.Patient
+            identifier:
+              description: External identifiers for this patient
+              type: array
+              items:
+                $ref: 'model-schema.yaml#/components/schemas/Identifier'
+            deceased:
+              description: Indicates if the individual is deceased or not
+              default: false
+              type: boolean
+              example: false
+            deceasedDateTime:
+              description: Indicates when the individual deceased
+              type: string
+              format: date-time
+              example: '1995-05-05T00:01:00.000Z'
+      required:
+        - identifier
+        - name
+        - gender
+        - birthDate
+    PostPatientBulk:
+      description: An array of PostPatients
+      properties:
+        clinicLocation:
+          $ref: 'uuid-schema.yaml#/components/schemas/ClinicLocationUUID'
+        patients:
+          description: The patients to add
+          type: array
+          items:
+            $ref: 'post-schema.yaml#/components/schemas/PostPatient'
+    PostPharmacyLocation:
+      description: A participant named PharmacyLocation
+      allOf:
+        - $ref: 'model-schema.yaml#/components/schemas/Location'
+        - properties:
+            resourceType:
+              default: org.healthchain.PharmacyLocation
+              description: The class identifier for this type
+              type: string
+              example: org.healthchain.PharmacyLocation
+            identifier:
+              description: External identifiers for this pharmacy location
+              type: array
+              items:
+                $ref: 'model-schema.yaml#/components/schemas/Identifier'
+            status:
+              description: Status of the pharmacy location
+              type: string
+              example: active
+              default: active
+            name:
+              description: Name of the pharmacy location
+              type: string
+              example: Pharma Mart
+            endpoint:
+              description: >-
+                Technical endpoints providing access to services operated for
+                the organization
+              type: string
+      required:
+        - identifier
+        - name
+        - status
+    PostMedicationRequest:
+      description: The details of a FHIR-based MedicationRequest
+      properties:
+        resourceType:
+          default: org.healthchain.MedicationRequest
+          description: The class identifier for this type
+          type: string
+          example: org.healthchain.MedicationRequest
+        onBehalfOf:
+          allOf:
+            - description: The unique HealthChain ID of a Clinic Location.
+            - $ref: 'uuid-schema.yaml#/components/schemas/ClinicLocationUUID'
+        patient:
+          allOf:
+            - description: The unique HealthChain ID of a patient
+            - $ref: 'uuid-schema.yaml#/components/schemas/PatientUUID'
+        recorder:
+          allOf:
+            - description: The unique HealthChain ID of a recorder
+            - $ref: 'uuid-schema.yaml#/components/schemas/PractitionerUUID'
+        prescriber:
+          allOf:
+            - description: The unique HealthChain ID of a prescriber
+            - $ref: 'uuid-schema.yaml#/components/schemas/PrescriberUUID'
+        assignedPharmacy:
+          allOf:
+            - description: The unique HealthChain ID of a Pharmacy Location
+            - $ref: 'uuid-schema.yaml#/components/schemas/PharmacyLocationUUID'
+        medicationCodeableConcept:
+          $ref: 'model-schema.yaml#/components/schemas/CodeableConcept'
+        medication:
+          default: 'external:Medication#00013234'
+          description: Medication Reference DIN
+          type: string
+          example: 'external:Medication#00013234'
+        identifier:
+          description: External identifiers for this medication request
+          type: array
+          items:
+            $ref: 'model-schema.yaml#/components/schemas/Identifier'
+        intent:
+          description: 'Whether the request is a proposal, plan, or an original order.'
+          default: proposal
+          enum:
+            - proposal
+            - plan
+            - order
+            - instance
+          type: string
+        reasonCode:
+          description: Reason or indication for writing the prescription
+          type: array
+          items:
+            $ref: 'model-schema.yaml#/components/schemas/CodeableConcept'
+        note:
+          description: Information about the prescription
+          type: array
+          items:
+            $ref: 'model-schema.yaml#/components/schemas/Annotation'
+        dosageInstruction:
+          description: >-
+            How the medication is to be used by the patient or administered by
+            the caregiver
+          type: array
+          items:
+            $ref: 'model-schema.yaml#/components/schemas/Dosage'
+        dispenseRequest:
+            $ref: 'model-schema.yaml#/components/schemas/DispenseRequest'
+        substitution:
+          $ref: 'model-schema.yaml#/components/schemas/Substitution'
+        authoredOn:
+          description: When request was initially authored
+          format: date-time
+          example: '1995-05-05T00:01:00.000Z'
+        status:
+          description: The status of the medication request
+          default: draft
+          example: draft
+          enum:
+            - draft
+            - active
+            - duplicate
+            - completed
+            - cancelled
+          type: string
+      required:
+        - patient
+    PostMedicationDispense:
+      description: An PostMedicationDispense transaction.
+      properties:
+        resourceType:
+          default: org.healthchain.MedicationDispense
+          description: The class identifier for this type
+          type: string
+          example: org.healthchain.MedicationDispense
+        medicationRequest:
+          allOf:
+            - description: The identifier of an instance of a medicationRequest
+            - $ref: 'uuid-schema.yaml#/components/schemas/MedicationRequestUUID'
+        patient:
+          allOf:
+            - description: The unique HealthChain ID of a patient
+            - $ref: 'uuid-schema.yaml#/components/schemas/PatientUUID'
+        pharmacyLocation:
+          allOf:
+            - description: The identifier of an instance of pharmacyLocation
+            - $ref: 'uuid-schema.yaml#/components/schemas/PharmacyLocationUUID'
+        dispenser:
+          allOf:
+            - description: >-
+                The unique HealthChain ID of a dispenser. Only used for
+                ImportMedicationDispense.  Will be ignored on
+                AddMedicationDispense.
+            - $ref: 'uuid-schema.yaml#/components/schemas/DispenserUUID'
+        identifier:
+          description: External identifiers for this medication dispense
+          type: array
+          items:
+            $ref: 'model-schema.yaml#/components/schemas/Identifier'
+        status:
+          description: >-
+            Whether the dispense is preparation, in_progress, on_hold,
+            completed, entered_in_error or stopped.
+          default: preparation
+          example: preparation
+          enum:
+            - preparation
+            - in_progress
+            - on_hold
+            - completed
+            - entered_in_error
+            - stopped
+          type: string
+        category:
+          $ref: 'model-schema.yaml#/components/schemas/CodeableConcept'
+        medicationCodeableConcept:
+          $ref: 'model-schema.yaml#/components/schemas/CodeableConcept'
+        medication:
+          default: 'external:Medication#00013234'
+          description: Medication Reference DIN
+          type: string
+          example: 'external:Medication#00013234'
+        dispenseType:
+          $ref: 'model-schema.yaml#/components/schemas/CodeableConcept'
+        quantity:
+          $ref: 'model-schema.yaml#/components/schemas/Quantity'
+        daysSupply:
+          $ref: 'model-schema.yaml#/components/schemas/Quantity'
+        whenPrepared:
+          description: When product was packaged and reviewed
+          format: date-time
+          example: '1995-05-05T00:01:00.000Z'
+        whenHandedOver:
+          description: When product was given out
+          format: date-time
+          example: '1995-05-05T00:01:00.000Z'
+        receiver:
+          $ref: 'model-schema.yaml#/components/schemas/Receiver'
+        note:
+          description: Information about the dispense
+          type: array
+          items:
+            $ref: 'model-schema.yaml#/components/schemas/Annotation'
+        dosageInstruction:
+          description: >-
+            How the medication is to be used by the patient or administered by
+            the caregiver
+          type: array
+          items:
+            $ref: 'model-schema.yaml#/components/schemas/Dosage'
+        substitution:
+          $ref: 'model-schema.yaml#/components/schemas/DispenseSubstitution'
+        cancelReason:
+          $ref: 'model-schema.yaml#/components/schemas/CodeableConcept'
+      required:
+        - medicationRequest
+        - patient
+        - pharmacyLocation
+        - substitution
+    PostSig:
+      description: A Sig that can be used as a prescriber's favorite sig.
+      properties:
+        resourceType:
+          default: org.healthchain.Sig
+          description: The class identifier for this type
+          type: string
+          example: org.healthchain.Sig
+        medicationCodeableConcept:
+          $ref: 'model-schema.yaml#/components/schemas/CodeableConcept'
+        medication:
+          default: 'external:Medication#00013234'
+          description: Medication Reference DIN
+          type: string
+          example: 'external:Medication#00013234'
+        dosageInstruction:
+          description: >-
+            How the medication is to be used by the patient or administered by
+            the caregiver
+          type: array
+          items:
+            $ref: 'model-schema.yaml#/components/schemas/Dosage'

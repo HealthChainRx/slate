@@ -1,0 +1,1092 @@
+openapi: 3.0.0
+components:
+  schemas:
+    Clinic:
+      description: A participant named Clinic
+      allOf:
+        - $ref: 'post-schema.yaml#/components/schemas/PostClinic'
+        - properties:
+            id:
+              $ref: 'uuid-schema.yaml#/components/schemas/UUID'
+      required:
+        - resourceType
+        - id
+        - identifier
+        - status
+        - name
+        - telecom
+      additionalProperties: false
+    ClinicLocation:
+      description: A participant named ClinicLocation
+      allOf:
+        - $ref: 'post-schema.yaml#/components/schemas/PostClinicLocation'
+        - properties:
+            id:
+              $ref: 'uuid-schema.yaml#/components/schemas/UUID'
+      required:
+        - resourceType
+        - id
+        - identifier
+        - name
+        - status
+        - partOf
+      additionalProperties: false
+    Dispenser:
+      description: A participant named Dispenser
+      allOf:
+        - $ref: 'post-schema.yaml#/components/schemas/PostDispenser'
+        - properties:
+            id:
+              $ref: 'uuid-schema.yaml#/components/schemas/UUID'
+      required:
+        - id
+        - identifier
+        - name
+      additionalProperties: false
+    Prescriber:
+      description: A participant named Prescriber
+      allOf:
+        - $ref: 'post-schema.yaml#/components/schemas/PostPrescriber'
+        - properties:
+            id:
+              $ref: 'uuid-schema.yaml#/components/schemas/UUID'
+      required:
+        - id
+        - identifier
+        - name
+      additionalProperties: false
+    ClinicAdmin:
+      description: A participant named ClinicAdmin
+      allOf:
+        - $ref: 'post-schema.yaml#/components/schemas/PostClinicAdmin'
+        - properties:
+            id:
+              $ref: 'uuid-schema.yaml#/components/schemas/UUID'
+      required:
+        - id
+        - identifier
+        - name
+      additionalProperties: false
+    Patient:
+      description: A participant named Patient
+      allOf:
+        - $ref: 'post-schema.yaml#/components/schemas/PostPatient'
+        - properties:
+            id:
+              $ref: 'uuid-schema.yaml#/components/schemas/UUID'
+      required:
+        - id
+        - identifier
+        - name
+        - gender
+        - telecom
+        - birthDate
+        - deceased
+        - address
+      additionalProperties: false
+    PharmacyLocation:
+      description: A participant named PharmacyLocation
+      allOf:
+        - $ref: 'post-schema.yaml#/components/schemas/PostPharmacyLocation'
+        - properties:
+            id:
+              $ref: 'uuid-schema.yaml#/components/schemas/UUID'
+      required:
+        - id
+        - identifier
+        - name
+      additionalProperties: false
+    MedicationRequest:
+      description: >-
+        An order or request for both supply of the medication and the
+        instructions for administration of the medication to a patient.
+      allOf:
+        - $ref: 'post-schema.yaml#/components/schemas/PostMedicationRequest'
+        - properties:
+            id:
+              $ref: 'uuid-schema.yaml#/components/schemas/UUID'
+      required:
+        - id
+        - patient
+        - status
+      additionalProperties: false
+    MedicationDispense:
+      description: A MedicationDispense is created by a /medication/dispense action.
+      allOf:
+        - $ref: 'post-schema.yaml#/components/schemas/PostMedicationDispense'
+        - properties:
+            id:
+              $ref: 'uuid-schema.yaml#/components/schemas/UUID'
+      required:
+        - id
+        - medicationRequest
+        - patient
+        - medicationCodeableConcept
+        - pharmacyLocation
+        - substitution
+      additionalProperties: false
+    Sig:
+      description: A Sig that can be used as a prescriber's favorite sig.
+      allOf:
+        - $ref: 'post-schema.yaml#/components/schemas/PostSig'
+        - properties:
+            id:
+              $ref: 'uuid-schema.yaml#/components/schemas/UUID'
+      required:
+        - id
+    Application:
+      description: An abstract participant named Application
+      properties:
+        resourceType:
+          default: org.healthchain.ClinicLocationApplication
+          description: The class identifier for this type
+          type: string
+          example: org.healthchain.ClinicLocationApplication
+        id:
+          $ref: 'uuid-schema.yaml#/components/schemas/UUID'
+        identifier:
+          description: External identifiers for this clinic location
+          type: array
+          items:
+            $ref: 'schemas.yaml#/components/schemas/Identifier'
+        status:
+          type: string
+          example: active
+          default: active
+        name:
+          type: string
+          example: The Clinic Zone
+        description:
+          type: string
+          example: The Clinic Zone
+        note:
+          description: Information about the prescription
+          type: array
+          items:
+            $ref: 'schemas.yaml#/components/schemas/Annotation'
+        authoredOn:
+          description: When request was initially authored
+          format: date-time
+          example: '1995-05-05T00:01:00.000Z'
+        recorder:
+          allOf:
+            - description: The unique HealthChain ID of a recorder
+            - $ref: 'uuid-schema.yaml#/components/schemas/UUID'
+        owner:
+          allOf:
+            - description: The unique HealthChain ID of a owner
+            - $ref: 'uuid-schema.yaml#/components/schemas/UUID'
+      required:
+        - resourceType
+        - id
+        - identifier
+        - name
+        - status
+        - authoredOn
+        - recorder
+    ClinicLocationApplication:
+      description: >
+        A participant named ClinicLocationApplication which identifies an application instance deployed at a
+        ClinicLocation configured with credentials for secure communications to the HealthChain Portage API.
+      allOf:
+        - $ref: 'schemas.yaml#/components/schemas/Application'
+        - properties:
+            clinicLocation:
+              $ref: 'uuid-schema.yaml#/components/schemas/ClinicLocationUUID'
+      required:
+        - clinicLocation
+    PharmacyLocationApplication:
+      description: A participant named PharmacyLocationApplication
+      allOf:
+        - $ref: 'schemas.yaml#/components/schemas/Application'
+        - properties:
+            pharmacyLocation:
+              $ref: 'uuid-schema.yaml#/components/schemas/PharmacyLocationUUID'
+      required:
+        - pharmacyLocation
+    AssignPharmacyLocation:
+      description: Assign a MedicationRequest to a pharmacy location.
+      properties:
+        assignedPharmacy:
+          allOf:
+            - description: The unique HealthChain ID of a Pharmacy Location
+            - $ref: 'uuid-schema.yaml#/components/schemas/PharmacyLocationUUID'
+      additionalProperties: false
+    UpdateMedicationRequest:
+      description: The properties of a MedicationRequest that can be updated.
+      properties:
+        resourceType:
+          default: org.healthchain.MedicationRequest
+          description: The class identifier for this type
+          type: string
+          example: org.healthchain.MedicationRequest
+        assignedPharmacy:
+          allOf:
+            - description: The unique HealthChain ID of a Pharmacy Location
+            - $ref: 'uuid-schema.yaml#/components/schemas/PharmacyLocationUUID'
+        status:
+          description: The status of the medication request
+          enum:
+            - cancel
+            - active
+            - renew
+    Identifier:
+      description: A concept named Identifier
+      properties:
+        resourceType:
+          default: org.fhir.Identifier
+          description: The class identifier for this type
+          type: string
+          example: org.fhir.Identifier
+        assigner:
+          description: Organization that issued id
+          type: string
+          example: HealthChain
+        value:
+          description: The value that is unique to the assigning organization
+          type: string
+          example: 42766d55-d2cf-4de7-9a8c-7816a529f370
+        system:
+          description: The namespace for the identifier value
+          type: string
+          example: 'https://healthahain.ca/path'
+      required:
+        - assigner
+        - value
+      additionalProperties: false
+    CodeableConcept:
+      description: org.fhir.CodeableConcept
+      properties:
+        resourceType:
+          default: org.fhir.CodeableConcept
+          description: A FHIR CodeableConcept
+          type: string
+          example: org.fhir.CodeableConcept
+        coding:
+          description: Code defined by a terminology system
+          type: array
+          items:
+            $ref: 'schemas.yaml#/components/schemas/Coding'
+        text:
+          description: Plain text representation of the concept
+          type: string
+          example: describe the concept
+      required:
+        - text
+      additionalProperties: false
+    Contact:
+      description: A concept named Contact
+      properties:
+        resourceType:
+          default: org.fhir.Contact
+          description: The class identifier for this type
+          type: string
+          example: org.fhir.Contact
+        purpose:
+          type: string
+        name:
+          $ref: 'schemas.yaml#/components/schemas/HumanName'
+        telecom:
+          description: A contact detail for the individual
+          type: array
+          items:
+            $ref: 'schemas.yaml#/components/schemas/ContactPoint'
+        address:
+          $ref: 'schemas.yaml#/components/schemas/Address'
+      required:
+        - name
+        - telecom
+        - address
+      additionalProperties: false
+    DispenseSubstitution:
+      description: Whether a substitution was performed on the dispense
+      properties:
+        resourceType:
+          default: org.fhir.DispenseSubstitution
+          description: The class identifier for this type
+          type: string
+          example: org.fhir.DispenseSubstitution
+        wasSubstituted:
+          description: Whether a substitution was or was not performed on the dispense
+          type: boolean
+          example: true
+        reason:
+          $ref: 'schemas.yaml#/components/schemas/CodeableConcept'
+      required:
+        - wasSubstituted
+      additionalProperties: false
+    Annotation:
+      description: A concept named Note
+      properties:
+        resourceType:
+          default: org.healthchain.Annotation
+          description: The class identifier for this type
+          type: string
+          example: org.healthchain.Annotation
+        author:
+          description: Individual responsible for the annotation
+          type: string
+          pattern: >-
+            ^resource:org.healthchain.[a-zA-Z]+#[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$
+          example: >-
+            resource:org.healthchain.Prescriber#5a84291f-c4e5-46a9-935c-c7a00e0823d5
+        authorName:
+          description: Individual's name who is responsible for the annotation
+          type: string
+        time:
+          description: Time of the annotation
+          type: string
+          format: date-time
+          example: '1995-05-05T00:01:00.000Z'
+        text:
+          description: The text of the annotation
+          type: string
+          example: Patient told to take with food
+      required:
+        - text
+      additionalProperties: false
+    Acknowledgement:
+      description: An Acknowledgement of an action
+      properties:
+        resourceType:
+          default: org.healthchain.Acknowledgement
+          description: The class identifier for this type
+          type: string
+          example: org.healthchain.Acknowledgement
+        participant:
+          description: Individual responsible for the acknowledgement
+          type: string
+          pattern: >-
+            ^resource:org.healthchain.[a-zA-Z]+#[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$
+          example: >-
+            resource:org.healthchain.Prescriber#5a84291f-c4e5-46a9-935c-c7a00e0823d5
+        time:
+          description: Time of the acknowledgement
+          type: string
+          format: date-time
+          example: '2018-05-05T00:01:00.000Z'
+        type:
+          description: The type of the acknowledgement
+          example: MedicationRequestAdded
+          enum:
+            - MedicationRequestAdded
+            - MedicationRequestCancelled
+      required:
+        - participant
+        - time
+        - type
+      additionalProperties: false
+    Author:
+      description: Lose identity details - considering changing to a type of participant
+      properties:
+        resourceType:
+          default: org.healthchain.Author
+          description: The class identifier for this type
+          type: string
+          example: org.healthchain.Author
+        participantType:
+          default: Prescriber
+          description: The participant type of the author
+          enum:
+            - Prescriber
+            - Dispenser
+            - Patient
+          example: Prescriber
+        participantId:
+          description: A unique HealthChain ID for the participant
+          type: string
+          format: uuid
+      additionalProperties: false
+    Receiver:
+      description: Lose identity details - considering changing to a type of participant
+      properties:
+        resourceType:
+          default: org.healthchain.Receiver
+          description: The class identifier for this type
+          type: string
+          example: org.healthchain.Receiver
+        participantType:
+          enum:
+            - Prescriber
+            - Dispenser
+            - Patient
+          example: Patient
+        participant:
+          allOf:
+            - description: A unique HealthChain ID for the receiver
+            - $ref: 'uuid-schema.yaml#/components/schemas/PatientOrPractitionerUUID'
+        text:
+          type: string
+          example: Mr. Bob Jones
+    DispenserPharmacyLocationRelationship:
+      description: Describe the relationship
+      properties:
+        relationshipType:
+          description: Relationship type
+          enum:
+            - implied
+            - referred
+            - consent
+            - employed
+          default: employed
+          example: employed
+    PrescriberClinicLocationRelationship:
+      description: Describe the relationship
+      properties:
+        relationshipType:
+          description: Relationship type
+          enum:
+            - implied
+            - referred
+            - consent
+            - employed
+          default: employed
+          example: employed
+    ClinicAdminClinicLocationRelationship:
+      description: Describe the relationship
+      properties:
+        relationshipType:
+          description: Relationship type
+          enum:
+            - implied
+            - referred
+            - consent
+            - employed
+          default: employed
+          example: employed
+    PatientPharmacyLocationRelationship:
+      description: Describe the relationship
+      properties:
+        relationshipType:
+          description: Relationship type
+          enum:
+            - implied
+            - referred
+            - consent
+            - employed
+          default: implied
+          example: implied
+    PatientClinicLocationRelationship:
+      description: Describe the relationship
+      properties:
+        relationshipType:
+          description: Relationship type
+          enum:
+            - implied
+            - referred
+            - consent
+            - employed
+          default: implied
+          example: implied
+    Dosage:
+      description: A concept named Dosage
+      properties:
+        resourceType:
+          default: org.fhir.Dosage
+          description: The class identifier for this type
+          type: string
+          example: org.fhir.Dosage
+        sequence:
+          description: The order of the dosage instructions
+          type: number
+          format: int32
+          minimum: 1
+          example: 1
+        text:
+          description: Free text dosage instructions e.g. SIG
+          type: string
+          example: Two tablets at once
+        additionalInstruction:
+          description: Supplemental instruction - e.g. "with meals"
+          type: array
+          items:
+            $ref: 'schemas.yaml#/components/schemas/CodeableConcept'
+        patientInstruction:
+          description: Patient or consumer oriented instructions
+          type: string
+          example: Two tablets at once
+        timing:
+          $ref: 'schemas.yaml#/components/schemas/Timing'
+        asNeededBoolean:
+          description: Indicate patient should take "as needed"
+          type: boolean
+          example: true
+        asNeededCodeableConcept:
+          $ref: 'schemas.yaml#/components/schemas/CodeableConcept'
+        site:
+          $ref: 'schemas.yaml#/components/schemas/CodeableConcept'
+        route:
+          $ref: 'schemas.yaml#/components/schemas/CodeableConcept'
+        method:
+          $ref: 'schemas.yaml#/components/schemas/CodeableConcept'
+        doseRange:
+          $ref: 'schemas.yaml#/components/schemas/Range'
+        doseQuantity:
+          $ref: 'schemas.yaml#/components/schemas/Quantity'
+        maxDosePerPeriod:
+          $ref: 'schemas.yaml#/components/schemas/Ratio'
+        maxDosePerAdministration:
+          $ref: 'schemas.yaml#/components/schemas/Quantity'
+        maxDosePerLifetime:
+          $ref: 'schemas.yaml#/components/schemas/Quantity'
+        rateRatio:
+          $ref: 'schemas.yaml#/components/schemas/Ratio'
+        rateRange:
+          $ref: 'schemas.yaml#/components/schemas/Range'
+        rateQuantity:
+          $ref: 'schemas.yaml#/components/schemas/Quantity'
+      additionalProperties: false
+    DispenseRequest:
+      description: Medication supply authorization
+      properties:
+        resourceType:
+          default: org.fhir.DispenseRequest
+          description: The class identifier for this type
+          type: string
+          example: org.fhir.DispenseRequest
+        validityPeriod:
+          $ref: 'schemas.yaml#/components/schemas/Period'
+        numberOfRepeatsAllowed:
+          description: Number of refills authorized
+          type: number
+          format: int32
+          minimum: 0
+        quantity:
+          $ref: 'schemas.yaml#/components/schemas/Quantity'
+        expectedSupplyDuration:
+          $ref: 'schemas.yaml#/components/schemas/Duration'
+        totalQuantity:
+          $ref: 'schemas.yaml#/components/schemas/Quantity'
+        pharmacyInstruction:
+          description: Pharmacy oriented instructions
+          type: string
+          example: Dispense as a tapered dose
+        type:
+          $ref: 'schemas.yaml#/components/schemas/CodeableConcept'
+      required:
+        - numberOfRepeatsAllowed
+      additionalProperties: false
+    Substitution:
+      description: Any restrictions on medication substitution
+      properties:
+        resourceType:
+          default: org.fhir.Substitution
+          description: The class identifier for this type
+          type: string
+          example: org.fhir.Substitution
+        allowed:
+          description: Whether substitution is allowed or not
+          default: true
+          type: boolean
+          example: true
+        reason:
+          $ref: 'schemas.yaml#/components/schemas/CodeableConcept'
+      required:
+        - allowed
+      additionalProperties: false
+    ContactPoint:
+      description: A concept named ContactPoint
+      properties:
+        resourceType:
+          default: org.fhir.ContactPoint
+          description: The class identifier for this type
+          type: string
+          example: org.fhir.ContactPoint
+        system:
+          enum:
+            - phone
+            - fax
+            - email
+            - pager
+            - url
+            - sms
+            - other
+          type: string
+          example: phone
+        value:
+          type: string
+          format: '^\(?([0-9]{3})\)?[-.●]?([0-9]{3})[-.●]?([0-9]{4})$'
+          example: 416-555-1212
+        use:
+          default: mobile
+          enum:
+            - home
+            - work
+            - business
+            - temp
+            - mobile
+          type: string
+          example: mobile
+        rank:
+          type: number
+          format: int32
+          minimum: 1
+          example: 1
+      required:
+        - system
+        - value
+      additionalProperties: false
+    HumanName:
+      description: A concept named HumanName
+      properties:
+        resourceType:
+          default: org.fhir.HumanName
+          description: The class identifier for this type
+          type: string
+          example: org.fhir.HumanName
+        use:
+          default: usual
+          enum:
+            - usual
+            - official
+            - temp
+            - nickname
+            - old
+            - maiden
+          type: string
+          example: usual
+        family:
+          type: string
+          example: McDonald
+        given:
+          type: array
+          items:
+            type: string
+            example: Ronald
+        prefix:
+          type: array
+          items:
+            type: string
+            example: Mr.
+        suffix:
+          type: array
+          items:
+            type: string
+            example: MD
+      required:
+        - family
+        - given
+      additionalProperties: false
+    Address:
+      description: A concept named Address
+      properties:
+        resourceType:
+          default: org.fhir.Address
+          description: The class identifier for this type
+          type: string
+          example: org.fhir.Address
+        use:
+          enum:
+            - home
+            - business
+            - work
+            - temp
+            - old
+          type: string
+          example: home
+        type:
+          enum:
+            - postal
+            - physical
+            - both
+        line:
+          type: array
+          items:
+            type: string
+            example: 123 Side St.
+        city:
+          type: string
+          example: Small Town
+        district:
+          type: string
+        state:
+          type: string
+          example: 'ON'
+        postalCode:
+          type: string
+          format: '^(?!.*[DFIOQU])[A-VXY][0-9][A-Z]●?[0-9][A-Z][0-9]$'
+          example: Z9Z 9Z9
+        country:
+          default: CA
+          enum:
+            - CA
+            - US
+          type: string
+          example: CA
+      required:
+        - line
+        - city
+        - state
+        - postalCode
+        - country
+      additionalProperties: false
+    Code:
+      description: A concept named Code
+      properties:
+        resourceType:
+          default: org.fhir.Code
+          description: The class identifier for this type
+          type: string
+          example: org.fhir.Code
+        coding:
+          type: array
+          items:
+            $ref: 'schemas.yaml#/components/schemas/Coding'
+      required:
+        - coding
+      additionalProperties: false
+    Coding:
+      description: A concept named Coding
+      properties:
+        resourceType:
+          default: org.fhir.Coding
+          description: The class identifier for this type
+          type: string
+          example: org.fhir.Coding
+        system:
+          type: string
+          example: 'http://testnet.healthchain.ca/api/Drug'
+        code:
+          type: string
+          example: A81087
+        display:
+          type: string
+          example: ALLERGENIC EXTRACT - STANDARDIZED REDTOP GRASS POLLEN
+        version:
+          type: string
+          example: GN
+      additionalProperties: false
+    Timing:
+      description: A concept named Timing
+      properties:
+        resourceType:
+          default: org.fhir.Timing
+          description: The class identifier for this type
+          type: string
+          example: org.fhir.Timing
+        eventDate:
+          description: When the event occurs
+          type: array
+          items:
+            type: string
+            format: date-time
+            example: '1995-05-05T00:01:00.000Z'
+        repeat:
+          $ref: 'schemas.yaml#/components/schemas/Repeat'
+        code:
+          $ref: 'schemas.yaml#/components/schemas/CodeableConcept'
+      additionalProperties: false
+    Quantity:
+      description: A concept named Quantity
+      properties:
+        resourceType:
+          default: org.fhir.Quantity
+          description: The class identifier for this type
+          type: string
+          example: org.fhir.Quantity
+        comparator:
+          $ref: 'schemas.yaml#/components/schemas/Coding'
+        value:
+          type: number
+          format: double
+          example: 2
+        unit:
+          type: string
+          example: TAB
+        system:
+          type: string
+          example: 'http://hl7.org/fhir/v3/orderableDrugForm'
+        code:
+          type: string
+          example: TAB
+      required:
+        - value
+      additionalProperties: false
+    Period:
+      description: A concept named Period
+      properties:
+        resourceType:
+          default: org.fhir.Period
+          description: The class identifier for this type
+          type: string
+          example: org.fhir.Period
+        start:
+          type: string
+          format: date-time
+          example: '1995-05-05T00:01:00.000Z'
+        end:
+          type: string
+          format: date-time
+          example: '1995-05-05T00:01:00.000Z'
+      required:
+        - start
+      additionalProperties: false
+    Duration:
+      description: A concept named Duration
+      properties:
+        resourceType:
+          default: org.fhir.Duration
+          description: The class identifier for this type
+          type: string
+          example: org.fhir.Duration
+        value:
+          type: number
+          format: double
+          example: 2
+        unit:
+          type: string
+          example: days
+        system:
+          type: string
+          example: 'http://unitsofmeasure.org'
+        code:
+          type: string
+          example: d
+      required:
+        - value
+      additionalProperties: false
+    Repeat:
+      description: >-
+        When the event is to occur + If there's an offset, there must be a when
+        (and not C, CM, CD, CV) + period SHALL be a non-negative value + If
+        there's a periodMax, there must be a period + If there's a durationMax,
+        there must be a duration + If there's a countMax, there must be a count
+        + if there's a duration, there needs to be duration units + If there's a
+        timeOfDay, there cannot be be a when, or vice versa + if there's a
+        period, there needs to be period units + duration SHALL be a
+        non-negative value
+      properties:
+        resourceType:
+          default: org.fhir.Repeat
+          description: The class identifier for this type
+          type: string
+          example: org.fhir.Repeat
+        boundsDuration:
+          $ref: 'schemas.yaml#/components/schemas/Duration'
+        boundsRange:
+          $ref: 'schemas.yaml#/components/schemas/Range'
+        boundsPeriod:
+          $ref: 'schemas.yaml#/components/schemas/Period'
+        count:
+          description: Number of times to repeat
+          type: number
+          format: integer
+        countMax:
+          description: Maximum number of times to repeat
+          type: number
+          format: integer
+        duration:
+          description: How long when it happens
+          type: number
+          format: double
+        durationMax:
+          description: How long when it happens (Max)
+          type: number
+          format: double
+        durationUnit:
+          description: s | min | h | d | wk | mo | a - unit of time (UCUM)
+          type: string
+        frequency:
+          description: Event occurs frequency times per period
+          type: number
+          format: integer
+          minimum: 0
+          example: 1
+        frequencyMax:
+          description: Event occurs up to frequencyMax times per period
+          type: number
+          format: integer
+        period:
+          description: Event occurs frequency times per period
+          type: number
+          format: double
+          minimum: 1
+          example: 1
+        periodMax:
+          description: Upper limit of period (3-4 hours)
+          type: number
+          format: double
+        periodUnit:
+          description: s | min | h | d | wk | mo | a - unit of time (UCUM)
+          type: string
+          example: d
+        dayOfWeek:
+          description: mon | tue | wed | thu | fri | sat | sun
+          type: array
+          items:
+            enum:
+              - sun
+              - mon
+              - tue
+              - wed
+              - thu
+              - fri
+              - sat
+          example:
+            - mon
+        timeOfDay:
+          description: Time of day for action
+          type: string
+        when:
+          description: Regular life events the event is tied to
+          type: array
+          items:
+            type: string
+        offset:
+          description: Minutes from event (before or after)
+          type: number
+          format: integer
+      additionalProperties: false
+    Range:
+      description: A concept named Repeat
+      properties:
+        resourceType:
+          default: org.fhir.Range
+          description: The class identifier for this type
+          type: string
+          example: org.fhir.Range
+        low:
+          $ref: 'schemas.yaml#/components/schemas/Quantity'
+        high:
+          $ref: 'schemas.yaml#/components/schemas/Quantity'
+    Ratio:
+      description: A concept named Ratio
+      properties:
+        resourceType:
+          default: org.fhir.Ratio
+          description: The class identifier for this type
+          type: string
+          example: org.fhir.Ratio
+        numerator:
+          $ref: 'schemas.yaml#/components/schemas/Quantity'
+        denominator:
+          $ref: 'schemas.yaml#/components/schemas/Quantity'
+    Organization:
+      description: A participant named Organization
+      properties:
+        resourceType:
+          default: org.healthchain.Organization
+          description: >-
+            An abstract representation implemented by PharmacyLocations and
+            Clinics
+          type: string
+          example: org.healthchain.Organization
+    Person:
+      description: A Person
+      properties:
+        name:
+          $ref: 'schemas.yaml#/components/schemas/HumanName'
+        telecom:
+          description: A contact detail for the prescriber
+          type: array
+          items:
+            $ref: 'schemas.yaml#/components/schemas/ContactPoint'
+        address:
+          description: Address of the prescriber
+          type: array
+          items:
+            $ref: 'schemas.yaml#/components/schemas/Address'
+        gender:
+          description: Gender of the prescriber
+          enum:
+            - male
+            - female
+            - unknown
+            - other
+          type: string
+          example: male
+        birthDate:
+          description: Birth date of the prescriber
+          type: string
+          format: date-time
+          example: '1995-05-05T00:01:00.000Z'
+    Location:
+      description: A Location
+      properties:
+        line:
+          description: Address details for the location
+          type: array
+          items:
+            type: string
+            example: 3630 Victoria Park Ave.
+        city:
+          description: City of the location
+          type: string
+          example: Toronto
+        state:
+          description: State or province of the location
+          type: string
+          example: 'ON'
+        postalCode:
+          description: Postal code of the location
+          type: string
+          format: '^(?!.*[DFIOQU])[A-VXY][0-9][A-Z]●?[0-9][A-Z][0-9]$'
+          example: Z9Z 9Z9
+        country:
+          description: Country of the location
+          enum:
+            - CA
+            - US
+          type: string
+          example: CA
+        telecom:
+          description: A contact detail for the location
+          type: array
+          items:
+            $ref: 'schemas.yaml#/components/schemas/ContactPoint'
+    PharmacyLocationRelationship:
+      description: A relationship with a Pharmacy Location
+      properties:
+        pharmacyLocation:
+          $ref: 'uuid-schema.yaml#/components/schemas/PharmacyLocationUUID'
+        relationshipType:
+          description: Relationship type
+          enum:
+            - implied
+            - referred
+            - consent
+            - employed
+          default: employed
+          example: employed
+        isPreferred:
+          type: boolean
+          example: false
+          default: false
+    ClinicLocationRelationship:
+      description: A relationship with a Pharmacy Location
+      properties:
+        clinicLocation:
+          $ref: 'uuid-schema.yaml#/components/schemas/ClinicLocationUUID'
+        relationshipType:
+          description: Relationship type
+          enum:
+            - implied
+            - referred
+            - consent
+            - employed
+          default: employed
+          example: employed
+    Tokens:
+      description: >
+        A container for the different types of tokens a user may have.
+      properties:
+        clinicLocation:
+          $ref: 'uuid-schema.yaml#/components/schemas/Token'
+        prescriber:
+          $ref: 'uuid-schema.yaml#/components/schemas/Token'
+        clinicAdmin:
+          $ref: 'uuid-schema.yaml#/components/schemas/Token'
+        pharmacyLocation:
+          $ref: 'uuid-schema.yaml#/components/schemas/Token'
+        dispenser:
+          $ref: 'uuid-schema.yaml#/components/schemas/Token'
+        patient:
+          $ref: 'uuid-schema.yaml#/components/schemas/Token'
+        vendorAdmin:
+          $ref: 'uuid-schema.yaml#/components/schemas/Token'
+        clinicLocationApplication:
+          $ref: 'uuid-schema.yaml#/components/schemas/Token'
+        pharmacyLocationApplication:
+          $ref: 'uuid-schema.yaml#/components/schemas/Token'
+        registrar:
+          $ref: 'uuid-schema.yaml#/components/schemas/Token'

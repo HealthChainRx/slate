@@ -1,0 +1,2301 @@
+openapi: 3.0.0
+info:
+  version: "1.2.0-oas3"
+  title: HealthChain Portage API
+  description: >
+    # Introduction
+
+    HealthChain Portage is a medication management platform designed to support
+    doctors, pharmacists, patients and our healthcare system.
+
+
+    This dashboard provides interactive developer tools and sample applications
+    that demonstrate how existing Electronic Medical Record (EMR) and Pharmacy
+    Management Software (PMS) systems can integrate with HealthChain Portage
+    (Portage) to support e-prescribing in Canada.
+
+    # Authentication
+
+    Only users of a trusted application may use the HealthChain Portage API.
+
+    ## Application
+
+    HealthChain applications are authenticated using a certificate and private
+    key; which is used to establish trusted communications between the application
+    instance.
+
+    ## Practitioner
+
+    Practitioners; or agents; of a Health Information Custodian communicate with
+    the HealthChain Portage API by using an authorization token.
+
+tags:
+  - name: Quick Reference
+  - name: Portage API (PAPI)
+  - name: Portage Queries
+  - name: Prescriber Preferences
+
+security:
+  - BearerAuth: []
+
+paths:
+  '/clinics':
+    get:
+      tags:
+        - Portage Queries
+      summary: Get clinics
+      description: Get clinics
+      parameters:
+        - name: name
+          in: query
+          description: The name of the clinic
+          schema:
+            type: string
+        - name: city
+          in: query
+          description: The city of the clinic location
+          schema:
+            type: string
+        - name: state
+          in: query
+          description: The state or province of the clinic location
+          required: false
+          schema:
+            type: string
+        - name: postalCode
+          in: query
+          description: The postalCode of the clinic location
+          schema:
+            type: string
+        - name: address
+          in: query
+          description: The address of the clinic location
+          schema:
+            type: string
+        - name: country
+          in: query
+          description: The country of the clinic location
+          schema:
+            type: string
+        - name: status
+          in: query
+          description: The status of the clinic
+          schema:
+            type: string
+            enum:
+              - active
+              - inactive
+              - sold
+              - closed
+              - relocated
+      responses:
+        '200':
+          description: Success
+          content:
+            'application/json':
+              schema:
+                $ref: 'model-schema.yaml#/components/schemas/Clinic'
+    post:
+      tags:
+        - Portage API (PAPI)
+      summary: Create a clinic
+      description: Create a clinic.
+      responses:
+        '200':
+          description: Request was successful
+        '409':
+          description: Conflict
+        '500':
+          description: Unexpected error
+      deprecated: false
+      requestBody:
+        content:
+          'application/json':
+            schema:
+              $ref: 'post-schema.yaml#/components/schemas/PostClinic'
+        description: Clinic details
+        required: true
+  '/clinics/{id}':
+    parameters:
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: string
+          pattern: '^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$'
+    get:
+      tags:
+        - Portage Queries
+      summary: Get a Clinic based on unique HealthChain ID.
+      description: Get a Clinic based on it's unique HealthChain identifier
+      responses:
+        '200':
+          description: Success
+          content:
+            'application/json':
+              schema:
+                $ref: 'model-schema.yaml#/components/schemas/Clinic'
+  '/clinics/{assigner}/{value}':
+    parameters:
+      - in: path
+        required: true
+        name: assigner
+        schema:
+          type: string
+          default: HealthChain
+      - in: path
+        required: true
+        name: value
+        schema:
+          type: string
+          default: TEST-CLINIC
+    get:
+      tags:
+        - Quick Reference
+        - Portage Queries
+      summary: Get a Clinic by Identifier assigner and value
+      description: Get a Clinic by Identifier assigner and value
+      responses:
+        '200':
+          description: Success
+          content:
+            'application/json':
+              schema:
+                $ref: 'model-schema.yaml#/components/schemas/Clinic'
+  /clinicLocations:
+    get:
+      tags:
+        - Portage Queries
+      summary: Query clinicLocations
+      description: Returns clinicLocations to the caller
+      parameters:
+        - name: name
+          in: query
+          description: The name of the clinic location
+          schema:
+            type: string
+        - name: city
+          in: query
+          description: The city of the clinic location
+          schema:
+            type: string
+        - name: state
+          in: query
+          description: The state or province of the clinic location
+          required: false
+          schema:
+            type: string
+        - name: postalCode
+          in: query
+          description: The postalCode of the clinic location
+          schema:
+            type: string
+        - name: address
+          in: query
+          description: The address of the clinic location
+          schema:
+            type: string
+        - name: country
+          in: query
+          description: The country of the clinic location
+          schema:
+            type: string
+        - name: status
+          in: query
+          description: The status of the clinic location
+          schema:
+            type: string
+            enum:
+              - active
+              - inactive
+              - sold
+              - closed
+              - relocated
+        - name: _include
+          in: query
+          description: A list of URI properties to be resolved/included in result
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+              enum:
+                - partOf
+      responses:
+        '200':
+          description: Success
+          content:
+            'application/json':
+              schema:
+                $ref: 'model-schema.yaml#/components/schemas/ClinicLocation'
+        default:
+          description: Error
+          content:
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    post:
+      tags:
+        - Portage API (PAPI)
+      summary: Create a clinic location
+      description: Create a clinic location.
+      responses:
+        '200':
+          description: Request was successful
+        '409':
+          description: Conflict
+        '500':
+          description: Unexpected error
+      deprecated: false
+      requestBody:
+        content:
+          'application/json':
+            schema:
+              $ref: 'post-schema.yaml#/components/schemas/PostClinicLocation'
+        description: The Clinic Location to create
+        required: true
+  '/clinicLocations/{id}':
+    parameters:
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: string
+          pattern: '^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$'
+      - in: query
+        name: _include
+        description: A list of URI properties to be resolved/included in result
+        required: false
+        schema:
+          type: array
+          items:
+            type: string
+            enum:
+              - partOf
+    get:
+      tags:
+        - Portage Queries
+      summary: Get a ClinicLocation by unique HealthChain id.
+      description: Get a ClinicLocation by unique HealthChain id.
+      responses:
+        '200':
+          description: Success
+          content:
+            'application/json':
+              schema:
+                $ref: 'model-schema.yaml#/components/schemas/ClinicLocation'
+  '/clinicLocations/{assigner}/{value}':
+    parameters:
+      - in: path
+        required: true
+        name: assigner
+        schema:
+          type: string
+          default: HealthChain
+      - in: path
+        required: true
+        name: value
+        schema:
+          type: string
+          default: TEST-CLINIC-LOCATION
+      - name: _include
+        in: query
+        description: A list of URI properties to be resolved/included in result
+        required: false
+        schema:
+          type: array
+          items:
+            type: string
+            enum:
+              - partOf
+    get:
+      tags:
+        - Quick Reference
+        - Portage Queries
+      summary: Get a ClinicLocation by Identifier properties assigner and value
+      description: Get a ClinicLocation by Identifier properties assigner and value.
+      responses:
+        '200':
+          description: Success
+          content:
+            'application/json':
+              schema:
+                $ref: 'model-schema.yaml#/components/schemas/ClinicLocation'
+        '409':
+          description: Conflict
+        default:
+          description: Unexpected error
+  /dispensers:
+    post:
+      tags:
+        - Portage API (PAPI)
+      summary: Create a dispenser
+      description: Create a dispenser.
+      responses:
+        '200':
+          description: Request was successful
+        '409':
+          description: Conflict
+        '500':
+          description: Unexpected error
+      deprecated: false
+      requestBody:
+        content:
+          'application/json':
+            schema:
+              $ref: 'post-schema.yaml#/components/schemas/PostDispenser'
+        description: Model instance data
+        required: true
+    get:
+      tags:
+        - Portage Queries
+      summary: Query dispensers
+      description: Returns dispensers based on the following criteria
+      parameters:
+        - name: name
+          in: query
+          description: The unique name of the dispenser
+          required: false
+          schema:
+            type: string
+        - name: city
+          in: query
+          description: The city of the dispenser
+          required: false
+          schema:
+            type: string
+        - name: state
+          in: query
+          description: The state or province of the dispenser
+          required: false
+          schema:
+            type: string
+        - name: postalCode
+          in: query
+          description: The postalCode of the dispenser
+          schema:
+            type: string
+        - name: address
+          in: query
+          description: The address of the dispenser
+          schema:
+            type: string
+        - name: country
+          in: query
+          description: The country of the dispenser
+          schema:
+            type: string
+        - name: gender
+          in: query
+          description: The gender of the dispenser
+          schema:
+            type: string
+            enum:
+              - male
+              - female
+              - other
+              - unknown
+        - name: pharmacyLocationId
+          in: query
+          description: The pharmacyLocation of this Dispenser
+          required: false
+          schema:
+            type: string
+        - name: _include
+          in: query
+          description: A list of URI properties to be resolved/included in result
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+              enum:
+                - pharmacyLocations
+      responses:
+        '200':
+          description: Success
+          content:
+            'application/json':
+              schema:
+                $ref: 'model-schema.yaml#/components/schemas/Dispenser'
+        default:
+          description: Error
+          content:
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  '/dispensers/{id}':
+    parameters:
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: string
+          pattern: '^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$'
+      - in: query
+        name: _include
+        description: A list of URI properties to be resolved/included in result
+        required: false
+        schema:
+          type: array
+          items:
+            type: string
+            enum:
+              - pharmacyLocations
+    get:
+      tags:
+        - Portage Queries
+      summary: Get a Dispenser by id
+      description: Get a Dispenser by id.
+      responses:
+        '200':
+          description: Success
+          content:
+            'application/json':
+              schema:
+                $ref: 'model-schema.yaml#/components/schemas/Dispenser'
+        default:
+          description: Error
+          content:
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  '/dispensers/{assigner}/{value}':
+    parameters:
+      - in: path
+        required: true
+        name: assigner
+        schema:
+          type: string
+      - in: path
+        required: true
+        name: value
+        schema:
+          type: string
+      - in: query
+        name: _include
+        description: A list of URI properties to be resolved/included in result
+        required: false
+        schema:
+          type: array
+          items:
+            type: string
+            enum:
+              - pharmacyLocations
+    get:
+      tags:
+        - Portage Queries
+      summary: Get a Dispenser by assigner and value
+      description: Get a Dispenser by assigner and value.
+      responses:
+        '200':
+          description: Success
+          content:
+            'application/json':
+              schema:
+                $ref: 'model-schema.yaml#/components/schemas/Dispenser'
+        default:
+          description: Error
+          content:
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  '/dispensers/{dispenserId}/pharmacyLocations/{pharmacyLocationId}':
+    parameters:
+      - in: path
+        name: dispenserId
+        required: true
+        schema:
+          type: string
+          pattern: '^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$'
+          default: dc98e40a-1c02-4ce6-a656-f28910c66aaa
+      - in: path
+        name: pharmacyLocationId
+        required: true
+        schema:
+          type: string
+          pattern: '^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$'
+          default: dc98e40a-1c02-4ce6-a656-f28910c66aaa
+    put:
+      tags:
+        - Portage API (PAPI)
+      summary: Create a dispenser-pharmacyLocation relationship
+      description: Create a dispenser-pharmacyLocation relationship
+      responses:
+        '200':
+          description: Request was successful
+        '409':
+          description: Server error
+        default:
+          description: Unexpected error
+      deprecated: false
+      requestBody:
+        content:
+          'application/json':
+            schema:
+              $ref: 'model-schema.yaml#/components/schemas/DispenserPharmacyLocationRelationship'
+        description: Describer the relationship
+  /prescribers:
+    get:
+      tags:
+        - Portage Queries
+      summary: Query prescribers
+      description: Returns prescribers based on the following criteria
+      parameters:
+        - name: name
+          in: query
+          description: The unique name of the prescriber
+          required: false
+          schema:
+            type: string
+        - name: city
+          in: query
+          description: The city of the prescriber
+          required: false
+          schema:
+            type: string
+        - name: state
+          in: query
+          description: The state or province of the prescriber
+          required: false
+          schema:
+            type: string
+        - name: postalCode
+          in: query
+          description: The postalCode of the prescriber
+          schema:
+            type: string
+        - name: address
+          in: query
+          description: The address of the prescriber
+          schema:
+            type: string
+        - name: country
+          in: query
+          description: The country of the prescriber
+          schema:
+            type: string
+        - name: gender
+          in: query
+          description: The gender of the prescriber
+          schema:
+            type: string
+            enum:
+              - male
+              - female
+              - other
+              - unknown
+        - name: clinicLocationId
+          in: query
+          description: The clinicLocation of this Prescriber
+          required: false
+          schema:
+            type: string
+        - name: _include
+          in: query
+          description: A list of URI properties to be resolved/included in result
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+              enum:
+                - favoriteSigs
+                - clinicLocations
+      responses:
+        '200':
+          description: Success
+          content:
+            'application/json':
+              schema:
+                $ref: 'model-schema.yaml#/components/schemas/Prescriber'
+        default:
+          description: Error
+          content:
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    post:
+      tags:
+        - Portage API (PAPI)
+      summary: Create a prescriber
+      description: Create a prescriber.
+      responses:
+        '200':
+          description: Request was successful
+        '409':
+          description: Conflict
+        '500':
+          description: Unexpected error
+      deprecated: false
+      requestBody:
+        content:
+          'application/json':
+            schema:
+              $ref: 'post-schema.yaml#/components/schemas/PostPrescriber'
+        description: Model instance data
+        required: true
+  '/prescribers/{id}':
+    parameters:
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: string
+          pattern: '^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$'
+    get:
+      tags:
+        - Portage Queries
+      summary: Get a Prescriber by id
+      description: Get a Prescriber by id.
+      parameters:
+        - name: _include
+          in: query
+          description: A list of URI properties to be resolved/included in result
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+              enum:
+                - favoriteSigs
+                - clinicLocations
+      responses:
+        '200':
+          description: Success
+          content:
+            'application/json':
+              schema:
+                $ref: 'model-schema.yaml#/components/schemas/Prescriber'
+  '/prescribers/{assigner}/{value}':
+    parameters:
+      - in: path
+        name: assigner
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: value
+        required: true
+        schema:
+          type: string
+    get:
+      tags:
+        - Portage Queries
+      summary: Get a Prescriber assigner and value
+      description: Get a Prescriber by assigner and value.
+      parameters:
+        - name: _include
+          in: query
+          description: A list of URI properties to be resolved/included in result
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+              enum:
+                - favoriteSigs
+                - clinicLocations
+      responses:
+        '200':
+          description: Success
+          content:
+            'application/json':
+              schema:
+                $ref: 'model-schema.yaml#/components/schemas/Prescriber'
+  '/prescribers/{prescriberId}/clinicLocations/{clinicLocationId}':
+    parameters:
+      - in: path
+        name: prescriberId
+        required: true
+        schema:
+          type: string
+          pattern: '^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$'
+          default: dc98e40a-1c02-4ce6-a656-f28910c66aaa
+      - in: path
+        name: clinicLocationId
+        required: true
+        schema:
+          type: string
+          pattern: '^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$'
+          default: dc98e40a-1c02-4ce6-a656-f28910c66aaa
+    put:
+      tags:
+        - Portage API (PAPI)
+      summary: Create a prescriber-clinicLocation relationship
+      description: Create a prescriber-clinicLocation relationship
+      responses:
+        '200':
+          description: Request was successful
+        '409':
+          description: Server error
+        default:
+          description: Unexpected error
+      deprecated: false
+      requestBody:
+        content:
+          'application/json':
+            schema:
+              $ref: 'model-schema.yaml#/components/schemas/PrescriberClinicLocationRelationship'
+        description: Describe the relationship
+  '/prescribers/favoriteSigs/{sigId}':
+    parameters:
+      - in: path
+        name: sigId
+        required: true
+        schema:
+          type: string
+          default: 952c6f05-0502-448d-865c-d0510105ce51
+    put:
+      tags:
+        - Prescriber Preferences
+      summary: Add a prescriber's favorite sig
+      description: >-
+        If a specific sigId is specified, a relationship to the existing sig
+        will be created.  Otherwise, a Sig described in the body will be created
+        and added as a favorite.
+
+        A prescriber can only ever run this for themselves.
+      responses:
+        '200':
+          description: Request was successful
+        '409':
+          description: Server error
+        default:
+          description: Unexpected error
+      deprecated: false
+      requestBody:
+        $ref: '#/components/requestBodies/x-any'
+    delete:
+      tags:
+        - Prescriber Preferences
+      summary: Remove a prescriber's favorite sig
+      description: Remove a prescriber's favorite sig
+      responses:
+        '200':
+          description: Request was successful
+        '409':
+          description: Server error
+        default:
+          description: Unexpected error
+      deprecated: false
+  /clinicAdmins:
+    get:
+      tags:
+        - Portage Queries
+      summary: Query ClinicAdmin
+      description: Returns ClinicAdmin based on the following criteria
+      parameters:
+        - name: name
+          in: query
+          description: The unique name of the prescriber
+          required: false
+          schema:
+            type: string
+        - name: city
+          in: query
+          description: The city of the prescriber
+          required: false
+          schema:
+            type: string
+        - name: state
+          in: query
+          description: The state or province of the prescriber
+          required: false
+          schema:
+            type: string
+        - name: postalCode
+          in: query
+          description: The postalCode of the prescriber
+          schema:
+            type: string
+        - name: address
+          in: query
+          description: The address of the prescriber
+          schema:
+            type: string
+        - name: country
+          in: query
+          description: The country of the prescriber
+          schema:
+            type: string
+        - name: gender
+          in: query
+          description: The gender of the prescriber
+          schema:
+            type: string
+            enum:
+              - male
+              - female
+              - other
+              - unknown
+        - name: clinicLocationId
+          in: query
+          description: The clinicLocation of this ClinicAdmin
+          required: false
+          schema:
+            type: string
+        - name: _include
+          in: query
+          description: A list of URI properties to be resolved/included in result
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+              enum:
+                - favoriteSigs
+                - clinicLocations
+      responses:
+        '200':
+          description: Success
+          content:
+            'application/json':
+              schema:
+                $ref: 'model-schema.yaml#/components/schemas/ClinicAdmin'
+        default:
+          description: Error
+          content:
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    post:
+      tags:
+        - Portage API (PAPI)
+      summary: Create a ClinicAdmin
+      description: Create a ClinicAdmin.
+      responses:
+        '200':
+          description: Request was successful
+        '409':
+          description: Conflict
+        '500':
+          description: Unexpected error
+      deprecated: false
+      requestBody:
+        content:
+          'application/json':
+            schema:
+              $ref: 'post-schema.yaml#/components/schemas/PostClinicAdmin'
+        description: Model instance data
+        required: true
+  '/clinicAdmins/{id}':
+    parameters:
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: string
+          pattern: '^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$'
+    get:
+      tags:
+        - Portage Queries
+      summary: Get a ClinicAdmin by id
+      description: Get a ClinicAdmin by id.
+      parameters:
+        - name: _include
+          in: query
+          description: A list of URI properties to be resolved/included in result
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+              enum:
+                - favoriteSigs
+                - clinicLocations
+      responses:
+        '200':
+          description: Success
+          content:
+            'application/json':
+              schema:
+                $ref: 'model-schema.yaml#/components/schemas/ClinicAdmin'
+  '/clinicAdmins/{assigner}/{value}':
+    parameters:
+      - in: path
+        name: assigner
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: value
+        required: true
+        schema:
+          type: string
+    get:
+      tags:
+        - Portage Queries
+      summary: Get a Prescriber assigner and value
+      description: Get a Prescriber by assigner and value.
+      parameters:
+        - name: _include
+          in: query
+          description: A list of URI properties to be resolved/included in result
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+              enum:
+                - favoriteSigs
+                - clinicLocations
+      responses:
+        '200':
+          description: Success
+          content:
+            'application/json':
+              schema:
+                $ref: 'model-schema.yaml#/components/schemas/ClinicAdmin'
+  '/clinicAdmins/{clinicAdminId}/clinicLocations/{clinicLocationId}':
+    parameters:
+      - in: path
+        name: clinicAdminId
+        required: true
+        schema:
+          type: string
+          pattern: '^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$'
+          default: dc98e40a-1c02-4ce6-a656-f28910c66aaa
+      - in: path
+        name: clinicLocationId
+        required: true
+        schema:
+          type: string
+          pattern: '^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$'
+          default: dc98e40a-1c02-4ce6-a656-f28910c66aaa
+    put:
+      tags:
+        - Portage API (PAPI)
+      summary: Create a clinicAdmin-clinicLocation relationship
+      description: Create a clinicAdmin-clinicLocation relationship
+      responses:
+        '200':
+          description: Request was successful
+        '409':
+          description: Server error
+        default:
+          description: Unexpected error
+      deprecated: false
+      requestBody:
+        content:
+          'application/json':
+            schema:
+              $ref: 'model-schema.yaml#/components/schemas/ClinicAdminClinicLocationRelationship'
+        description: Describe the relationship
+  '/clinicAdmins/favoriteSigs/{sigId}':
+    parameters:
+      - in: path
+        name: sigId
+        required: true
+        schema:
+          type: string
+          default: 952c6f05-0502-448d-865c-d0510105ce51
+    put:
+      tags:
+        - Prescriber Preferences
+      summary: Add a prescriber's favorite sig
+      description: >-
+        If a specific sigId is specified, a relationship to the existing sig
+        will be created.  Otherwise, a Sig described in the body will be created
+        and added as a favorite.
+
+        A prescriber can only ever run this for themselves.
+      responses:
+        '200':
+          description: Request was successful
+        '409':
+          description: Server error
+        default:
+          description: Unexpected error
+      deprecated: false
+      requestBody:
+        $ref: '#/components/requestBodies/x-any'
+    delete:
+      tags:
+        - Prescriber Preferences
+      summary: Remove a prescriber's favorite sig
+      description: Remove a prescriber's favorite sig
+      responses:
+        '200':
+          description: Request was successful
+        '409':
+          description: Server error
+        default:
+          description: Unexpected error
+      deprecated: false
+  /patients:
+    get:
+      tags:
+        - Portage Queries
+      summary: Find patients
+      description: Find patients
+      parameters:
+        - name: name
+          in: query
+          description: The name of patient
+          required: false
+          schema:
+            type: string
+        - name: clinicLocationId
+          in: query
+          description: The clinicLocation of this patient
+          required: false
+          schema:
+            type: string
+        - name: pharmacyLocationId
+          in: query
+          description: The pharmacyLocation of this patient
+          required: false
+          schema:
+            type: string
+        - name: direct
+          in: query
+          description: If true filters out patients without a direct relationship
+          required: false
+          schema:
+            type: boolean
+            default: false
+        - name: _include
+          in: query
+          description: A list of URI properties to be resolved/included in result
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+              enum:
+                - prescribers
+                - clinicLocations
+                - dispensers
+                - pharmacyLocations
+      responses:
+        '200':
+          description: Success
+          content:
+            'application/json':
+              schema:
+                $ref: 'model-schema.yaml#/components/schemas/Patient'
+    post:
+      tags:
+        - Portage API (PAPI)
+      summary: Register a patient
+      description: Register a patient
+      responses:
+        '200':
+          description: Request was successful
+        '409':
+          description: Conflict
+        '500':
+          description: Unexpected error
+      deprecated: false
+      requestBody:
+        content:
+          'application/json':
+            schema:
+              $ref: 'post-schema.yaml#/components/schemas/PostPatient'
+        description: Patient details
+        required: true
+  /bulkPatients:
+    post:
+      tags:
+        - Portage API (PAPI)
+      summary: Register many patients
+      description: Regsiter many patients
+      responses:
+        '200':
+          description: Request was successful
+        '409':
+          description: Conflict
+        '500':
+          description: Unexpected error
+      deprecated: false
+      requestBody:
+        content:
+          'application/json':
+            schema:
+              $ref: 'post-schema.yaml#/components/schemas/PostPatientBulk'
+        description: Patients
+        required: true
+  '/patients/{id}':
+    parameters:
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: string
+          pattern: '^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$'
+    get:
+      tags:
+        - Portage Queries
+      summary: Get a Patient assigner and value
+      description: Get a Patient by assigner and value.
+      parameters:
+        - name: _include
+          in: query
+          description: A list of URI properties to be resolved/included in result
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+              enum:
+                - prescribers
+                - clinicLocations
+                - dispensers
+                - pharmacyLocations
+      responses:
+        '200':
+          description: Success
+          content:
+            'application/json':
+              schema:
+                $ref: 'model-schema.yaml#/components/schemas/Patient'
+  '/patients/{id}/mme':
+    parameters:
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: string
+          pattern: '^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$'
+    get:
+      tags:
+        - Portage Queries
+      summary: Get MME for a Patient's current active medications
+      description: Get MME for a Patient's current active medications.
+      responses:
+        '200':
+          description: Success
+  '/patients/{assigner}/{value}':
+    parameters:
+      - in: path
+        name: assigner
+        required: true
+        schema:
+          type: string
+          default: ca-on-patient-hcn
+      - in: path
+        name: value
+        required: true
+        schema:
+          type: string
+          default: '4983206675'
+    get:
+      tags:
+        - Quick Reference
+        - Portage Queries
+      summary: Get a Patient assigner and value
+      description: >-
+        Get a Patient by assigner and value.  See Patient list for test
+        ca-on-patient-hcn HINs
+      parameters:
+        - name: _include
+          in: query
+          description: A list of URI properties to be resolved/included in result
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+              enum:
+                - prescribers
+                - clinicLocations
+                - dispensers
+                - pharmacyLocations
+      responses:
+        '200':
+          description: Success
+          content:
+            'application/json':
+              schema:
+                $ref: 'model-schema.yaml#/components/schemas/Patient'
+  '/patients/{patientId}/clinicLocations/{clinicLocationId}':
+    parameters:
+      - in: path
+        name: patientId
+        required: true
+        schema:
+          type: string
+          pattern: '^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$'
+          default: dc98e40a-1c02-4ce6-a656-f28910c66aaa
+      - in: path
+        name: clinicLocationId
+        required: true
+        schema:
+          type: string
+          pattern: '^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$'
+          default: dc98e40a-1c02-4ce6-a656-f28910c66aaa
+    put:
+      tags:
+        - Portage API (PAPI)
+      summary: Create a patient-clinicLocation relationship
+      description: Create a patient-clinicLocation relationship
+      responses:
+        '200':
+          description: Request was successful
+        '409':
+          description: Server error
+        default:
+          description: Unexpected error
+      deprecated: false
+      requestBody:
+        content:
+          'application/json':
+            schema:
+              $ref: 'model-schema.yaml#/components/schemas/PatientClinicLocationRelationship'
+        description: Describe the relationship
+  '/patients/{patientId}/pharmacyLocations/{pharmacyLocationId}':
+    parameters:
+      - in: path
+        name: patientId
+        required: true
+        schema:
+          type: string
+          format: uuid
+          default: dc98e40a-1c02-4ce6-a656-f28910c66aaa
+      - in: path
+        name: pharmacyLocationId
+        required: true
+        schema:
+          type: string
+          format: uuid
+          default: dc98e40a-1c02-4ce6-a656-f28910c66aaa
+    put:
+      tags:
+        - Portage API (PAPI)
+      summary: Create a patient-pharmacyLocation relationship
+      description: Create a patient-pharmacyLocation relationship
+      responses:
+        '200':
+          description: Request was successful
+        '409':
+          description: Server error
+        default:
+          description: Unexpected error
+      deprecated: false
+      requestBody:
+        content:
+          'application/json':
+            schema:
+              $ref: 'model-schema.yaml#/components/schemas/PatientPharmacyLocationRelationship'
+        description: Describe the relationship
+  /pharmacyLocations:
+    get:
+      tags:
+        - Portage Queries
+      summary: Query pharmacyLocations
+      description: Returns pharmacyLocations to the caller
+      parameters:
+        - name: name
+          in: query
+          description: The name of the pharmacy
+          schema:
+            type: string
+        - name: city
+          in: query
+          description: The city of the pharmacy
+          schema:
+            type: string
+        - name: state
+          in: query
+          description: The state or province of the pharmacy
+          required: false
+          schema:
+            type: string
+        - name: postalCode
+          in: query
+          description: The postalCode of the pharmacy
+          schema:
+            type: string
+        - name: address
+          in: query
+          description: The address of the pharmacy
+          schema:
+            type: string
+        - name: country
+          in: query
+          description: The country of the pharmacy
+          schema:
+            type: string
+        - name: status
+          in: query
+          description: The status of the pharmacy
+          schema:
+            type: string
+            enum:
+              - active
+              - inactive
+              - sold
+              - closed
+              - relocated
+      responses:
+        '200':
+          description: Success
+          content:
+            'application/json':
+              schema:
+                $ref: 'model-schema.yaml#/components/schemas/PharmacyLocation'
+        default:
+          description: Error
+          content:
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    post:
+      tags:
+        - Portage API (PAPI)
+      summary: Create a pharmacy location
+      description: Create a pharmacy location.
+      responses:
+        '200':
+          description: Request was successful
+        '409':
+          description: Conflict
+        '500':
+          description: Unexpected error
+      deprecated: false
+      requestBody:
+        content:
+          'application/json':
+            schema:
+              $ref: 'post-schema.yaml#/components/schemas/PostPharmacyLocation'
+        description: Model instance data
+        required: true
+  '/pharmacyLocations/{id}':
+    parameters:
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: string
+          pattern: '^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$'
+    get:
+      tags:
+        - Portage Queries
+      summary: Get a PharmacyLocation by unique HealthChain id.
+      description: Get a PharmacyLocation by unique HealthChain id.
+      responses:
+        '200':
+          description: Success
+          content:
+            'application/json':
+              schema:
+                $ref: 'model-schema.yaml#/components/schemas/PharmacyLocation'
+  '/pharmacyLocations/{assigner}/{value}':
+    parameters:
+      - in: path
+        required: true
+        name: assigner
+        schema:
+          type: string
+          default: HealthChain
+      - in: path
+        required: true
+        name: value
+        schema:
+          type: string
+          default: TEST-PHARMACY
+    get:
+      tags:
+        - Quick Reference
+        - Portage Queries
+      summary: Get a PharmacyLocation by Identifier properties assigner and value
+      description: Get a PharmacyLocation by Identifier properties assigner and value.
+      responses:
+        '200':
+          description: Success
+          content:
+            'application/json':
+              schema:
+                $ref: 'model-schema.yaml#/components/schemas/PharmacyLocation'
+  /medicationRequests:
+    get:
+      tags:
+        - Quick Reference
+        - Portage Queries
+      summary: >-
+        Get MedicationRequests by patientId, onBehalfOf, pharmacyLocation and
+        status
+      description: Get MedicationRequests by patientId and/or status
+      parameters:
+        - name: patientId
+          in: query
+          description: The unique HealthChain ID of a patient
+          required: false
+          schema:
+            type: string
+        - name: status
+          in: query
+          description: The status of the medication request
+          required: false
+          schema:
+            type: string
+            enum:
+              - draft
+              - active
+              - duplicate
+              - completed
+              - cancelled
+        - name: onBehalfOf
+          in: query
+          description: The clinic this medicaiton request was prescribed from
+          required: false
+          schema:
+            type: string
+        - name: assignedPharmacy
+          in: query
+          description: The pharmacy location this medication request is assigned to
+          required: false
+          schema:
+            type: string
+        - name: acknowledged
+          in: query
+          description: Only return Medication Requests that are or aren't acknowledged
+          required: false
+          schema:
+            type: boolean
+        - name: _include
+          in: query
+          description: A list of URI properties to be resolved/included in result
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+              enum:
+                - prescriber
+                - onBehalfOf
+                - patient
+                - recorder
+                - dispenser
+                - assignedPharmacy
+                - medicationDispenses
+                - medication
+      responses:
+        '200':
+          description: Success
+          content:
+            'application/json':
+              schema:
+                $ref: 'model-schema.yaml#/components/schemas/MedicationRequest'
+    post:
+      tags:
+        - Quick Reference
+        - Portage API (PAPI)
+      summary: Prescribe a medication
+      description: >-
+        The Prescribe action accepts a PrescribeTxn and creates a
+        MedicationRequest.
+      responses:
+        '200':
+          description: Request was successful
+        '409':
+          description: Conflict
+        '500':
+          description: Unexpected error
+      deprecated: false
+      requestBody:
+        content:
+          'application/json':
+            schema:
+              $ref: 'post-schema.yaml#/components/schemas/PostMedicationRequest'
+        description: FHIR-based MedicationRequest details
+        required: true
+  '/medicationRequests/{id}':
+    parameters:
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: string
+          pattern: '^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$'
+    get:
+      tags:
+        - Portage Queries
+      summary: Get medication request
+      description: Return a MedicationRequest record with specified id.
+      parameters:
+        - name: _include
+          in: query
+          description: A list of URI properties to be resolved/included in result
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+              enum:
+                - prescriber
+                - onBehalfOf
+                - patient
+                - recorder
+                - dispenser
+                - assignedPharmacy
+                - medicationDispenses
+                - medication
+      responses:
+        '200':
+          description: Success
+          content:
+            'application/json':
+              schema:
+                $ref: 'model-schema.yaml#/components/schemas/MedicationRequest'
+        '409':
+          description: Server error
+        default:
+          description: Unexpected error
+    delete:
+      tags:
+        - Portage API (PAPI)
+      summary: Cancel a medication request.
+      description: Cancel a medication request.
+      responses:
+        '200':
+          description: Request was successful
+        '409':
+          description: Server error
+        default:
+          description: Unexpected error
+      deprecated: false
+  '/medicationRequests/{id}/mme':
+    parameters:
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: string
+          pattern: '^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$'
+    get:
+      tags:
+        - Portage Queries
+      summary: Get MME for the medication request
+      description: Return the MME value for the MedicationRequest record with specified id.
+      responses:
+        '200':
+          description: Success
+        '409':
+          description: Server error
+        default:
+          description: Unexpected error
+  '/medicationRequests/{id}/cancel':
+    parameters:
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: string
+          pattern: '^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$'
+    put:
+      tags:
+        - Portage API (PAPI)
+      summary: Cancels a MedicationRequest
+      responses:
+        '200':
+          description: Request was successful
+        '409':
+          description: Server error
+        default:
+          description: Unexpected error
+  '/medicationRequests/{id}/approve':
+    parameters:
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: string
+          pattern: '^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$'
+    put:
+      tags:
+        - Portage API (PAPI)
+      summary: Approves a MedicationRequest
+      responses:
+        '200':
+          description: Request was successful
+        '409':
+          description: Server error
+        default:
+          description: Unexpected error
+  '/medicationRequests/{id}/acknowledge':
+    parameters:
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: string
+          pattern: '^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$'
+    put:
+      tags:
+        - Portage API (PAPI)
+      summary: Acknowledges a MedicationRequest
+      responses:
+        '200':
+          description: Request was successful
+          content:
+            'application/json':
+              schema:
+                $ref: 'model-schema.yaml#/components/schemas/Acknowledgement'
+        '409':
+          description: Server error
+        default:
+          description: Unexpected error
+  '/medicationRequests/{id}/acknowledge/{type}':
+    parameters:
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: string
+          pattern: '^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$'
+      - in: path
+        name: type
+        required: true
+        schema:
+          type: string
+          enum:
+            - MedicationRequestAdded
+            - MedicationRequestCancelled
+    put:
+      tags:
+        - Portage API (PAPI)
+      summary: Acknowledges a MedicationRequest
+      responses:
+        '200':
+          description: Request was successful
+          content:
+            'application/json':
+              schema:
+                $ref: 'model-schema.yaml#/components/schemas/Acknowledgement'
+        '409':
+          description: Server error
+        default:
+          description: Unexpected error
+  '/medicationRequests/{id}/note':
+    parameters:
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: string
+          pattern: '^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$'
+    get:
+      tags:
+        - Portage Queries
+      summary: Get medication request notes
+      description: Return a MedicationRequest record's notes with specified id.
+      responses:
+        '200':
+          description: Success
+          content:
+            'application/json':
+              schema:
+                $ref: 'model-schema.yaml#/components/schemas/Annotation'
+        '409':
+          description: Server error
+        default:
+          description: Unexpected error
+    put:
+      tags:
+        - Portage API (PAPI)
+      summary: Adds a note to a MedicationRequest
+      responses:
+        '200':
+          description: Request was successful
+        '409':
+          description: Server error
+        default:
+          description: Unexpected error
+      requestBody:
+        $ref: 'requestBodies.yaml#/components/requestBodies/Annotation'
+  '/medicationRequests/{id}/pharmacyLocation/{pharmacyLocationId}':
+    parameters:
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: string
+          pattern: '^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$'
+      - in: path
+        name: pharmacyLocationId
+        required: true
+        schema:
+          type: string
+          pattern: '^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$'
+    put:
+      tags:
+        - Portage API (PAPI)
+      summary: Assign a MedicationRequest to a PharmacyLocation
+      responses:
+        '200':
+          description: Request was successful
+        '409':
+          description: Server error
+        default:
+          description: Unexpected error
+  /medicationDispenses:
+    get:
+      tags:
+        - Quick Reference
+        - Portage Queries
+      summary: >-
+        Query dispenses by patientId, pharmacyLocation, medicationRequestId and
+        status
+      description: >-
+        Returns all MedicationDispense to the caller, filtered according to ACL
+        rules.
+      parameters:
+        - name: pharmacyLocationId
+          in: query
+          description: The unique HealthChain ID of a pharmacy location.
+          schema:
+            type: string
+        - name: patientId
+          in: query
+          description: The unique HealthChain ID of a patient
+          schema:
+            type: string
+        - name: medicationRequestId
+          in: query
+          description: >-
+            Return MedicationDispenses associated with a specific medication
+            request
+          schema:
+            type: string
+        - name: status
+          in: query
+          description: The status of the medication dispense
+          required: false
+          schema:
+            type: string
+            enum:
+              - preparation
+              - in_progress
+              - on_hold
+              - completed
+              - entered_in_error
+              - stopped
+        - name: _include
+          in: query
+          description: A list of URI properties to be resolved/included in result
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+              enum:
+                - medicationRequest
+                - dispenser
+                - patient
+                - pharmacyLocation
+                - medication
+      responses:
+        '200':
+          description: Success
+          content:
+            'application/json':
+              schema:
+                $ref: 'model-schema.yaml#/components/schemas/MedicationDispense'
+        default:
+          description: Error
+          content:
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    post:
+      tags:
+        - Quick Reference
+        - Portage API (PAPI)
+      summary: Dispense a medication
+      description: The AddMedicationDispense transaction
+      responses:
+        '200':
+          description: Request was successful
+        '409':
+          description: Conflict
+        '500':
+          description: Unexpected error
+      deprecated: false
+      requestBody:
+        content:
+          'application/json':
+            schema:
+              $ref: 'post-schema.yaml#/components/schemas/PostMedicationDispense'
+        description: Model instance data
+        required: true
+  '/medicationDispenses/{id}':
+    parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          pattern: '^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$'
+    put:
+      tags:
+        - Portage API (PAPI)
+      summary: Execute transactions related to a MedicaitonDispense
+      description: >-
+        Currently supports AddMedicationDispense and ImportMedicationDispense
+        transactions.
+      responses:
+        '200':
+          description: Request was successful
+        '409':
+          description: Server error
+        default:
+          description: Unexpected error
+      requestBody:
+        content:
+          'application/json':
+            schema:
+              $ref: 'model-schema.yaml#/components/schemas/MedicationDispense'
+        description: Transaction details
+        required: true
+    get:
+      tags:
+        - Portage Queries
+      summary: Query medication requests
+      description: >-
+        Return a list of MedicationRequest records based on the following
+        criteria.
+      parameters:
+        - name: _include
+          in: query
+          description: A list of URI properties to be resolved/included in result
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+              enum:
+                - medicationRequest
+                - dispenser
+                - patient
+                - pharmacyLocation
+                - medication
+      responses:
+        '200':
+          description: Request was successful
+        '409':
+          description: Server error
+        default:
+          description: Unexpected error
+  '/medicationDispenses/{id}/note':
+    parameters:
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: string
+          pattern: '^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$'
+    get:
+      tags:
+        - Portage Queries
+      summary: Get medication dispense notes
+      description: Return a MedicationDispense record's notes with specified id.
+      responses:
+        '200':
+          description: Success
+          content:
+            'application/json':
+              schema:
+                $ref: 'model-schema.yaml#/components/schemas/Annotation'
+        '409':
+          description: Server error
+        default:
+          description: Unexpected error
+    put:
+      tags:
+        - Portage API (PAPI)
+      summary: Adds a note to a MedicationDispense
+      responses:
+        '200':
+          description: Request was successful
+        '409':
+          description: Server error
+        default:
+          description: Unexpected error
+      requestBody:
+        $ref: 'requestBodies.yaml#/components/requestBodies/Annotation'
+  '/medications/{din}':
+    parameters:
+      - name: din
+        in: path
+        required: true
+        schema:
+          type: string
+          pattern: '^[0-9]{8}$'
+    get:
+      tags:
+        - Portage Queries
+      summary: Query medication by DIN
+      description: Return the Medication information for a drug.
+      responses:
+        '200':
+          description: Request was successful
+        '409':
+          description: Server error
+        default:
+          description: Unexpected error
+  '/medications/{din}/mme':
+    parameters:
+      - name: din
+        in: path
+        required: true
+        schema:
+          type: string
+          pattern: '^[0-9]{8}$'
+    get:
+      tags:
+        - Portage Queries
+      summary: Query MME for a DIN
+      description: Return the MME value for a unit of chosen drug.
+      responses:
+        '200':
+          description: Request was successful
+        '409':
+          description: Server error
+        default:
+          description: Unexpected error
+  /medications:
+    parameters:
+      - in: query
+        name: query
+        required: true
+        schema:
+          type: string
+          default: Tylenol
+    get:
+      tags:
+        - Portage Queries
+      summary: Return Medication information for chosen drugs.
+      description: Return Medication information for chosen drugs.
+      responses:
+        '200':
+          description: Request was successful
+        '409':
+          description: Server error
+        default:
+          description: Unexpected error
+  /clinicLocationApplications:
+    get:
+      tags:
+        - Portage Queries
+      summary: Query ClinicLocationApplication
+      description: Returns ClinicLocationApplication to the caller
+      parameters:
+        - name: status
+          in: query
+          description: The status of the clinic
+          schema:
+            type: string
+            enum:
+              - active
+              - inactive
+        - name: recorderId
+          in: query
+          description: The recorder of this Application
+          required: false
+          schema:
+            type: string
+        - name: clinicLocationId
+          in: query
+          description: The clinicLocation of this Application
+          required: false
+          schema:
+            type: string
+        - name: _include
+          in: query
+          description: A list of URI properties to be resolved/included in result
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+              enum:
+                - owner
+                - recorder
+                - clinicLocation
+      responses:
+        '200':
+          description: Success
+          content:
+            'application/json':
+              schema:
+                $ref: 'model-schema.yaml#/components/schemas/ClinicLocationApplication'
+        default:
+          description: Error
+          content:
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  '/clinicLocationApplications/{id}':
+    parameters:
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: string
+          pattern: '^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$'
+      - in: query
+        name: _include
+        description: A list of URI properties to be resolved/included in result
+        required: false
+        schema:
+          type: array
+          items:
+            type: string
+            enum:
+              - owner
+              - recorder
+              - clinicLocation
+    get:
+      tags:
+        - Portage Queries
+      summary: Get a ClinicLocationApplication by unique HealthChain id.
+      description: Get a ClinicLocationApplication by unique HealthChain id.
+      responses:
+        '200':
+          description: Success
+          content:
+            'application/json':
+              schema:
+                $ref: 'model-schema.yaml#/components/schemas/ClinicLocationApplication'
+  '/clinicLocationApplications/{assigner}/{value}':
+    parameters:
+      - in: path
+        required: true
+        name: assigner
+        schema:
+          type: string
+          default: HealthChain
+      - in: path
+        required: true
+        name: value
+        schema:
+          type: string
+          default: TEST-CLINIC-LOCATION
+      - name: _include
+        in: query
+        description: A list of URI properties to be resolved/included in result
+        required: false
+        schema:
+          type: array
+          items:
+            type: string
+            enum:
+              - owner
+              - recorder
+              - clinicLocation
+    get:
+      tags:
+        - Quick Reference
+        - Portage Queries
+      summary: >-
+        Get a ClinicLocationApplication by Identifier properties assigner and
+        value
+      description: >-
+        Get a ClinicLocationApplication by Identifier properties assigner and
+        value.
+      responses:
+        '200':
+          description: Success
+          content:
+            'application/json':
+              schema:
+                $ref: 'model-schema.yaml#/components/schemas/ClinicLocationApplication'
+        '409':
+          description: Conflict
+        default:
+          description: Unexpected error
+  /pharmacyLocationApplications:
+    get:
+      tags:
+        - Portage Queries
+      summary: Query PharmacyLocationApplication
+      description: Returns PharmacyLocationApplication to the caller
+      parameters:
+        - name: status
+          in: query
+          description: The status of the PharmacyLocationApplication
+          schema:
+            type: string
+            enum:
+              - active
+              - inactive
+        - name: recorderId
+          in: query
+          description: The recorder of this Application
+          required: false
+          schema:
+            type: string
+        - name: pharmacyLocationId
+          in: query
+          description: The pharmacyLocation of this Application
+          required: false
+          schema:
+            type: string
+        - name: _include
+          in: query
+          description: A list of URI properties to be resolved/included in result
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+              enum:
+                - owner
+                - recorder
+                - pharmacyLocation
+      responses:
+        '200':
+          description: Success
+          content:
+            'application/json':
+              schema:
+                $ref: 'model-schema.yaml#/components/schemas/PharmacyLocationApplication'
+        default:
+          description: Error
+          content:
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  '/pharmacyLocationApplications/{id}':
+    parameters:
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: string
+          pattern: '^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$'
+      - in: query
+        name: _include
+        description: A list of URI properties to be resolved/included in result
+        required: false
+        schema:
+          type: array
+          items:
+            type: string
+            enum:
+              - owner
+              - recorder
+              - pharmacyLocation
+    get:
+      tags:
+        - Portage Queries
+      summary: Get a PharmacyLocationApplication by unique HealthChain id.
+      description: Get a PharmacyLocationApplication by unique HealthChain id.
+      responses:
+        '200':
+          description: Success
+          content:
+            'application/json':
+              schema:
+                $ref: 'model-schema.yaml#/components/schemas/PharmacyLocationApplication'
+  '/pharmacyLocationApplications/{assigner}/{value}':
+    parameters:
+      - in: path
+        required: true
+        name: assigner
+        schema:
+          type: string
+          default: HealthChain
+      - in: path
+        required: true
+        name: value
+        schema:
+          type: string
+          default: TEST-PHARMACY-LOCATION
+      - name: _include
+        in: query
+        description: A list of URI properties to be resolved/included in result
+        required: false
+        schema:
+          type: array
+          items:
+            type: string
+            enum:
+              - owner
+              - recorder
+              - pharmacyLocation
+    get:
+      tags:
+        - Quick Reference
+        - Portage Queries
+      summary: >-
+        Get a PharmacyLocationApplication by Identifier properties assigner and
+        value
+      description: >-
+        Get a PharmacyLocationApplication by Identifier properties assigner and
+        value.
+      responses:
+        '200':
+          description: Success
+          content:
+            'application/json':
+              schema:
+                $ref: 'model-schema.yaml#/components/schemas/PharmacyLocationApplication'
+        '409':
+          description: Conflict
+        default:
+          description: Unexpected error
+  /sigs:
+    get:
+      tags:
+        - Portage Queries
+      summary: Get Sigs
+      description: Get Sigs
+      responses:
+        '200':
+          description: Success
+          content:
+            'application/json':
+              schema:
+                $ref: 'model-schema.yaml#/components/schemas/Sig'
+    post:
+      tags:
+        - Portage API (PAPI)
+      summary: Create a Sig
+      description: Create a Sig.
+      responses:
+        '200':
+          description: 'Sig {sigURI} successfully created'
+        '409':
+          description: Conflict
+        '500':
+          description: Unexpected error
+      deprecated: false
+      requestBody:
+        content:
+          'application/json':
+            schema:
+              $ref: 'post-schema.yaml#/components/schemas/PostSig'
+        description: Sig details
+        required: true
+  /swagger:
+    x-swagger-pipe: swagger_raw
+servers:
+  - url: '//localhost:3000/'
+  - url: '//https://dev.healthchain.ca/portage/v1/'
+components:
+  securitySchemes:
+    BearerAuth:
+      type: https
+      scheme: bearer
+  requestBodies:
+    x-any:
+      content:
+        'application/json':
+          schema:
+            $ref: '#/components/schemas/x-any'
+  schemas:
+    ErrorResponse:
+      properties:
+        code:
+          type: integer
+          format: int32
+        message:
+          type: string
+      required:
+        - code
+        - message
+    x-any:
+      properties: {}
