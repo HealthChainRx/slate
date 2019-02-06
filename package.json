@@ -1,0 +1,16 @@
+{
+  "name": "@healthchain/slate",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "start": "node ./main.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/HealthChainRx/slate.git"
+  },
+  "dependencies": {
+    "js-yaml": "^3.12.1",
+    "widdershins": "^3.6.7"
+  }
+}

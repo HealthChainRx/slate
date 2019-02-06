@@ -1,0 +1,36 @@
+Location:
+  name: Location
+  type: object
+  description: A Location
+  properties:
+    line:
+      description: Address details for the location
+      type: array
+      items:
+        type: string
+        example: 3630 Victoria Park Ave.
+    city:
+      description: City of the location
+      type: string
+      example: Toronto
+    state:
+      description: State or province of the location
+      type: string
+      example: ON
+    postalCode:
+      description: Postal code of the location
+      type: string
+      format: ^(?!.*[DFIOQU])[A-VXY][0-9][A-Z]●?[0-9][A-Z][0-9]$
+      example: Z9Z 9Z9
+    country:
+      description: Country of the location
+      enum:
+        - CA
+        - US
+      type: string
+      example: CA
+    telecom:
+      description: A contact detail for the location
+      type: array
+      items:
+        $ref: ../concepts/ContactPoint.yaml#/ContactPoint
