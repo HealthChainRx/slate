@@ -1,0 +1,41 @@
+ContactPoint:
+  description: A concept named ContactPoint
+  properties:
+    resourceType:
+      default: org.fhir.ContactPoint
+      description: The class identifier for this type
+      type: string
+      example: org.fhir.ContactPoint
+    system:
+      enum:
+        - phone
+        - fax
+        - email
+        - pager
+        - url
+        - sms
+        - other
+      type: string
+      example: phone
+    value:
+      type: string
+      format: ^\(?([0-9]{3})\)?[-.●]?([0-9]{3})[-.●]?([0-9]{4})$
+      example: 416-555-1212
+    use:
+      default: mobile
+      enum:
+        - home
+        - work
+        - business
+        - temp
+        - mobile
+      type: string
+      example: mobile
+    rank:
+      type: number
+      format: int32
+      minimum: 1
+      example: 1
+  required:
+    - system
+    - value

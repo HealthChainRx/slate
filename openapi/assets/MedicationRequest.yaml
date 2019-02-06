@@ -1,0 +1,14 @@
+MedicationRequest:
+  description: >-
+    An order or request for both supply of the medication and the
+    instructions for administration of the medication to a patient.
+  allOf:
+    - $ref: 'post-schema.yaml#/components/schemas/PostMedicationRequest'
+    - properties:
+        id:
+          $ref: ../misc/UUID.yaml#/UUID
+  required:
+    - id
+    - patient
+    - status
+  additionalProperties: false

@@ -1,0 +1,4 @@
+UUID:
+  type: string
+  pattern: '^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$'
+  example: dc98e40a-1c02-4ce6-a656-f28910c66aaa

@@ -1,0 +1,36 @@
+PharmacyLocation:
+  name: PharmacyLocation
+  type: object
+  description: A participant named PharmacyLocation
+  allOf:
+    - properties:
+        id:
+          $ref: ../misc/UUID.yaml#/UUID
+        resourceType:
+          default: org.healthchain.PharmacyLocation
+          description: The class identifier for this type
+          type: string
+          example: org.healthchain.PharmacyLocation
+        identifier:
+          description: External identifiers for this pharmacy location
+          type: array
+          items:
+            $ref: ../concepts/Identifier.yaml#/Identifier
+        status:
+          description: Status of the pharmacy location
+          type: string
+          example: active
+          default: active
+        name:
+          description: Name of the pharmacy location
+          type: string
+          example: Pharma Mart
+        endpoint:
+          description: Technical endpoints providing access to services operated for the organization
+          type: string
+    - $ref: ../assets/Location.yaml#/Location
+  required:
+    - id
+    - identifier
+    - name
+    - status

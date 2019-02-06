@@ -1,0 +1,16 @@
+ErrorResponse:
+  name: ErrorResponse
+  type: object
+  required:
+    - message
+    - errors
+  properties:
+    code:
+      type: integer
+      format: int32
+    message:
+      type: string
+    errors:
+      type: array
+      items:
+        type: string

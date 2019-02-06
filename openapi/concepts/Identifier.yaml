@@ -1,0 +1,23 @@
+Identifier:
+  description: A concept named Identifier
+  properties:
+    resourceType:
+      default: org.fhir.Identifier
+      description: The class identifier for this type
+      type: string
+      example: org.fhir.Identifier
+    assigner:
+      description: Organization that issued id
+      type: string
+      example: HealthChain
+    value:
+      description: The value that is unique to the assigning organization
+      type: string
+      example: '42766d55-d2cf-4de7-9a8c-7816a529f370'
+    system:
+      description: The namespace for the identifier value
+      type: string
+      example: https://healthahain.ca/path
+  required:
+    - assigner
+    - value
